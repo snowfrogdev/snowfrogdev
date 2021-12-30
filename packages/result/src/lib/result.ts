@@ -16,15 +16,22 @@ export abstract class Result<T, E> {
   containsErr(err: E): boolean {
     return this.isErr() && this.value === err;
   }
+
+  map<U>(op: (value: T) => U): Result<U, E> {
+    if (this.isOk()) {
+      return new Ok(op(this.value as T));
+    }
+    return new Err((<Err<E>>this).value as E);
+  }
 }
 
-export class Ok<T> extends Result<T, unknown> {
+export class Ok<T> extends Result<T, any> {
   constructor(value: T) {
     super(value);
   }
 }
 
-export class Err<E> extends Result<unknown, E> {
+export class Err<E> extends Result<any, E> {
   constructor(value: E) {
     super(value);
   }

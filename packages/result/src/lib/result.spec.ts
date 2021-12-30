@@ -30,4 +30,8 @@ describe('Result<T, E>', () => {
   ])('containsErr()', (sut, result) => {
     expect(sut.containsErr('Some error message')).toBe(result);
   });
+
+  /* TODO: Implement Result.ok() and Result.err() once the Option<T> lib is done */
+  
+  
 });
