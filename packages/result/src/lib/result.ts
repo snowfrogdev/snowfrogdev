@@ -54,6 +54,11 @@ export abstract class Result<T, E> {
     if (this.isErr()) throw new Error(`called \`Result.unwrap()\` on an \`Err\` value: "${this.value as E}"`);
     return (<Ok<T>>this).value as T;
   }
+
+  expectErr(message: string): E {
+    if (this.isOk()) throw new Error(`${message}: ${this.value as T}`);
+    return (<Err<E>>this).value as E;
+  }
 }
 
 export class Ok<T> extends Result<T, any> {
