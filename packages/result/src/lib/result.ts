@@ -12,6 +12,10 @@ export abstract class Result<T, E> {
   contains(value: T): boolean {
     return this.isOk() && this.value === value;
   }
+
+  containsErr(err: E): boolean {
+    return this.isErr() && this.value === err;
+  }
 }
 
 export class Ok<T> extends Result<T, unknown> {
