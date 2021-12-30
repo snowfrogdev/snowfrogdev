@@ -36,6 +36,10 @@ export abstract class Result<T, E> {
   andThen<U>(f: (value: T) => Result<U, E>): Result<U, E> {
     return this.isOk() ? f(this.value as T) : new Err((<Err<E>>this).value);
   }
+
+  or<F>(res: Result<T, F>): Result<T, F> {
+    return this.isOk() ? new Ok(this.value as T) : res;
+  }
 }
 
 export class Ok<T> extends Result<T, any> {

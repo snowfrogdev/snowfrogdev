@@ -73,4 +73,13 @@ describe('Result<T, E>', () => {
   ])('andThen()', (sut, f1, f2, result) => {
     expect(sut.andThen(f1).andThen(f2)).toEqual(result);
   });
+
+  it.each([
+    [new Ok(2), new Err('late error'), new Ok(2)],
+    [new Err('early error'), new Ok(2), new Ok(2)],
+    [new Err('not a 2'), new Err('late error'), new Err('late error')],
+    [new Ok(2), new Ok(100), new Ok(2)],
+  ])('or()', (sut, other, result) => {
+    expect(sut.or(other)).toEqual(result);
+  });
 });
