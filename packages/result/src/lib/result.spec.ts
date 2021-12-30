@@ -15,7 +15,6 @@ describe('Result<T, E>', () => {
     expect(sut.isErr()).toBe(result);
   });
 
-
   /* TODO: Implement Result.ok() and Result.err() once the Option<T> lib is done */
 
   it.each([
@@ -31,7 +30,7 @@ describe('Result<T, E>', () => {
   ])('mapOrElse()', (sut, result) => {
     expect(
       sut.mapOrElse(
-        (e) => 21 * 2,
+        () => 21 * 2,
         (str: string) => str.length
       )
     ).toBe(result);
@@ -90,5 +89,22 @@ describe('Result<T, E>', () => {
   ])('unwrapOrElse()', (sut, result) => {
     const count = (x: string) => x.length;
     expect(sut.unwrapOrElse(count)).toBe(result);
+  });
+
+  it('expect() when Ok', () => {
+    expect(new Ok(2).expect('Testing expect')).toBe(2);
+  });
+
+  it('expect() when Err', () => {
+    expect(() => new Err('emergency failure').expect('Testing expect')).toThrowError('Testing expect: emergency failure');
+  });
+
+  it('unwrap() when Ok', () => {
+    expect(new Ok(2).unwrap()).toBe(2);
+  });
+
+  it('unwrap() when Err', () => {
+    const result = 'called `Result.unwrap()` on an `Err` value: "emergency failure"';
+    expect(() => new Err('emergency failure').unwrap()).toThrowError(result);
   });
 });
