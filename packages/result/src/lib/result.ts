@@ -9,14 +9,6 @@ export abstract class Result<T, E> {
     return !this.isOk();
   }
 
-  contains(value: T): boolean {
-    return this.isOk() && this.value === value;
-  }
-
-  containsErr(err: E): boolean {
-    return this.isErr() && this.value === err;
-  }
-
   map<U>(f: (value: T) => U): Result<U, E> {
     return this.isOk() ? new Ok(f(this.value as T)) : new Err((<Err<E>>this).value as E);
   }
