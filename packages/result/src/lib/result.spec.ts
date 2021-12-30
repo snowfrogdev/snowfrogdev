@@ -82,4 +82,13 @@ describe('Result<T, E>', () => {
   ])('or()', (sut, other, result) => {
     expect(sut.or(other)).toEqual(result);
   });
+
+  it.each([
+    [new Ok(2), sq, sq, new Ok(2)],
+    [new Ok(2), err, sq, new Ok(2)],
+    [new Err(3), sq, err, new Ok(9)],
+    [new Err(3), err, err, new Err(3)],
+  ])('orElse()', (sut, f1, f2, result) => {
+    expect(sut.orElse(f1).orElse(f2)).toEqual(result);
+  });
 });
