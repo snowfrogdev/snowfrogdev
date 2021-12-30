@@ -116,5 +116,14 @@ describe('Result<T, E>', () => {
     const result = 'Testing expectErr: 10';
     expect(() => new Ok(10).expectErr('Testing expectErr')).toThrowError(result);
   })
+
+  it('unwrapErr() when Ok', () => {
+    const result = 'called `Result.unwrapErr()` on an `Ok` value: 2';
+    expect(() => new Ok(2).unwrapErr()).toThrowError(result);
+  })
+
+  it('unwrapErr() when Err', () => {
+    expect(new Err('emergency failure').unwrapErr()).toBe('emergency failure');
+  })
 });
 
