@@ -17,11 +17,12 @@ export abstract class Result<T, E> {
     return this.isErr() && this.value === err;
   }
 
-  map<U>(op: (value: T) => U): Result<U, E> {
-    if (this.isOk()) {
-      return new Ok(op(this.value as T));
-    }
-    return new Err((<Err<E>>this).value as E);
+  map<U>(f: (value: T) => U): Result<U, E> {
+    return this.isOk() ? new Ok(f(this.value as T)) : new Err((<Err<E>>this).value as E);
+  }
+
+  mapOr<U>(defaultValue: U, f: (value: T) => U): U {
+    return this.isOk() ? f(this.value as T) : defaultValue;
   }
 }
 

@@ -33,5 +33,10 @@ describe('Result<T, E>', () => {
 
   /* TODO: Implement Result.ok() and Result.err() once the Option<T> lib is done */
   
-  
+  it.each([
+    [new Ok('foo'), 3],
+    [new Err('bar'), 42],
+  ])('mapOr()', (sut, result) => {
+    expect(sut.mapOr(42, (str: string) => str.length)).toBe(result);
+  });
 });
