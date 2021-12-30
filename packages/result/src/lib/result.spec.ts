@@ -51,4 +51,15 @@ describe('Result<T, E>', () => {
       )
     ).toBe(result);
   });
+
+  /* TODO: Implement Result.iter() once the Iterator lib is done */
+
+  it.each([
+    [new Ok('2'), new Err('late error'), new Err('late error')],
+    [new Err('early error'), new Ok('foo'), new Err('early error')],
+    [new Err('not a 2'), new Err('late error'), new Err('not a 2')],
+    [new Ok(2), new Ok('different result type'), new Ok('different result type')],
+  ])('and()', (sut, other, result) => {
+    expect(sut.and(other)).toEqual(result);
+  });
 });

@@ -28,6 +28,10 @@ export abstract class Result<T, E> {
   mapOrElse<U>(defaultValue: (e: E) => U, f: (value: T) => U): U {
     return this.isOk() ? f(this.value as T) : defaultValue((<Err<E>>this).value as E);
   }
+
+  and<U>(res: Result<U, E>): Result<U, E> {
+    return this.isOk() ? res : new Err((<Err<E>>this).value as E);
+  }
 }
 
 export class Ok<T> extends Result<T, any> {
