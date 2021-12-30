@@ -125,5 +125,6 @@ describe('Result<T, E>', () => {
   it('unwrapErr() when Err', () => {
     expect(new Err('emergency failure').unwrapErr()).toBe('emergency failure');
   })
-});
 
+  // TODO: Implement Result.transpose() once the Option<Result<T, E>> lib is done
+});

@@ -19,5 +19,13 @@
         ]
       }
     }
+  },
+  "targetDependencies": {
+    "publish": [
+      {
+        "target": "build",
+        "projects": "self"
+      }
+    ]
   }
 }
