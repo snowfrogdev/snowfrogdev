@@ -91,4 +91,11 @@ describe('Result<T, E>', () => {
   ])('orElse()', (sut, f1, f2, result) => {
     expect(sut.orElse(f1).orElse(f2)).toEqual(result);
   });
+
+  it.each([
+    [new Ok(9), 2, 9],
+    [new Err('error'), 2, 2],
+  ])('unwrapOr()', (sut, defaultValue, result) => {
+    expect(sut.unwrapOr(defaultValue)).toBe(result);
+  });
 });

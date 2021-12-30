@@ -44,6 +44,10 @@ export abstract class Result<T, E> {
   orElse<F>(f: (err: E) => Result<T, F>): Result<T, F> {
     return this.isOk() ? new Ok(this.value as T) : f((<Err<E>>this).value as E);
   }
+
+  unwrapOr(defaultValue: T): T {
+    return this.isOk() ? this.value as T : defaultValue;
+  }
 }
 
 export class Ok<T> extends Result<T, any> {
