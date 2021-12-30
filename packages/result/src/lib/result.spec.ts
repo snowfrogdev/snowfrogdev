@@ -98,4 +98,12 @@ describe('Result<T, E>', () => {
   ])('unwrapOr()', (sut, defaultValue, result) => {
     expect(sut.unwrapOr(defaultValue)).toBe(result);
   });
+
+  it.each([
+    [new Ok(2), 2],
+    [new Err('foo'), 3],
+  ])('unwrapOrElse()', (sut, result) => {
+    const count = (x: string) => x.length;
+    expect(sut.unwrapOrElse(count)).toBe(result);
+  });
 });

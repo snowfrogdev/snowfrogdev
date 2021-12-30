@@ -46,7 +46,11 @@ export abstract class Result<T, E> {
   }
 
   unwrapOr(defaultValue: T): T {
-    return this.isOk() ? this.value as T : defaultValue;
+    return this.isOk() ? (this.value as T) : defaultValue;
+  }
+
+  unwrapOrElse(f: (err: E) => T): T {
+    return this.isOk() ? (this.value as T) : f((<Err<E>>this).value as E);
   }
 }
 
