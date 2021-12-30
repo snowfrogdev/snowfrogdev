@@ -18,7 +18,7 @@ export abstract class Result<T, E> {
   }
 
   map<U>(f: (value: T) => U): Result<U, E> {
-    return this.isOk() ? new Ok(f(this.value as T)) : new Err((<Err<E>>this).value as E);
+    return this.isOk() ? new Ok(f(this.value as T)) : new Err((<Err<E>>this).value);
   }
 
   mapOr<U>(defaultValue: U, f: (value: T) => U): U {
@@ -26,11 +26,15 @@ export abstract class Result<T, E> {
   }
 
   mapOrElse<U>(defaultValue: (e: E) => U, f: (value: T) => U): U {
-    return this.isOk() ? f(this.value as T) : defaultValue((<Err<E>>this).value as E);
+    return this.isOk() ? f(this.value as T) : defaultValue((<Err<E>>this).value);
   }
 
   and<U>(res: Result<U, E>): Result<U, E> {
-    return this.isOk() ? res : new Err((<Err<E>>this).value as E);
+    return this.isOk() ? res : new Err((<Err<E>>this).value);
+  }
+
+  andThen<U>(f: (value: T) => Result<U, E>): Result<U, E> {
+    return this.isOk() ? f(this.value as T) : new Err((<Err<E>>this).value);
   }
 }
 
