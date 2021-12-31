@@ -1,0 +1,26 @@
+name: Docs
+on: 
+  push:
+    branches:
+      - main
+     
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install and Build
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+        run: |
+          npm install
+          npx docs result
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.7
+        with:
+          branch: main
+          folder: docs
