@@ -35,6 +35,14 @@
         "command": "npm publish --tag=latest --access public",
         "cwd": "dist/packages/result"
       }
+    },
+    "docs": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npx typedoc --options typedoc.json",
+        "cwd": "dist/packages/result"
+      }
     }
   },
   "tags": []
