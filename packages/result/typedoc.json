@@ -2,6 +2,6 @@
   "entryPoints": [
     "src/index.ts"
   ],
-  "out": "docs/result",
+  "out": "../../docs/result",
   "tsconfig": "tsconfig.lib.json"
 }

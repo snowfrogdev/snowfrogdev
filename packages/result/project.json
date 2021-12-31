@@ -5,24 +5,34 @@
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/result",
         "main": "packages/result/src/index.ts",
         "tsConfig": "packages/result/tsconfig.lib.json",
-        "assets": ["packages/result/*.md"]
+        "assets": [
+          "packages/result/*.md"
+        ]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["packages/result/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/result/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/result"],
+      "outputs": [
+        "coverage/packages/result"
+      ],
       "options": {
         "jestConfig": "packages/result/jest.config.js",
         "passWithNoTests": true
@@ -38,10 +48,12 @@
     },
     "docs": {
       "executor": "@nrwl/workspace:run-commands",
-      "outputs": [],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "command": "npx typedoc --options typedoc.json",
-        "cwd": "dist/packages/result"
+        "command": "npx typedoc --options packages/result/typedoc.json",
+        "outputPath": "docs/result"
       }
     }
   },
