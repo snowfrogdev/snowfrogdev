@@ -17,7 +17,7 @@ jobs:
           node-version: '14'
       - run: |
           npm install
-          npx docs result
+          nx docs result
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.7
