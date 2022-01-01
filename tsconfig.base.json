@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@snowfrog/result": ["packages/result/src/index.ts"],
-      "@snowfrogdev/option": ["packages/option/src/index.ts"]
+      "@snowfrog/option": ["packages/option/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
