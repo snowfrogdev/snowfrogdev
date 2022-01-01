@@ -1,5 +1,5 @@
 import { Err, Ok } from '@snowfrog/result';
-import { None, Some } from './option';
+import { None, Some, Option } from './option';
 
 describe('Option<T>', () => {
   it.each([
@@ -98,5 +98,17 @@ describe('Option<T>', () => {
     [new None(), new None(), new None()],
   ])('and()', (sut, other, result) => {
     expect(sut.and(other)).toEqual(result);
+  });
+
+  const sq = (x: number): Option<number> => new Some(x * x);
+  const nope = (): Option<number> => new None();
+
+  it.each([
+    [new Some(2), sq, sq, new Some(16)],
+    [new Some(2), sq, nope, new None()],
+    [new Some(2), nope, sq, new None()],
+    [new None(), sq, sq, new None()],
+  ])('andThen()', (sut, f1, f2, result) => {
+    expect(sut.andThen(f1).andThen(f2)).toEqual(result);
   });
 });

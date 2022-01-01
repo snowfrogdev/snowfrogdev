@@ -52,6 +52,10 @@ export abstract class Option<T> {
   and<U>(optB: Option<U>): Option<U> {
     return this.isNone() ? new None() : optB;
   }
+
+  andThen<U>(fn: (value: T) => Option<U>): Option<U> { 
+    return this.isNone() ? new None() : fn((<Some<T>>this).value);
+  }
 }
 
 export class Some<T> extends Option<T> {
