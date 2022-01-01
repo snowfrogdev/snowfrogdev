@@ -61,4 +61,16 @@ describe('Option<T>', () => {
   ])('mapOr()', (sut, result) => {
     expect(sut.mapOr(42, (str) => str.length)).toBe(result);
   });
+
+  it.each([
+    [new Some('foo'), 3],
+    [new None(), 42],
+  ])('mapOrElse()', (sut, result) => {
+    expect(
+      sut.mapOrElse(
+        () => 2 * 21,
+        (str) => str.length
+      )
+    ).toBe(result);
+  });
 });

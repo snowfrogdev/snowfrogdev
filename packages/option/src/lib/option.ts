@@ -31,8 +31,12 @@ export abstract class Option<T> {
     return this.isNone() ? new None() : new Some(f((<Some<T>>this).value));
   }
 
-  mapOr<U>(defaultValue: U, f: (value: T) => U): U { 
+  mapOr<U>(defaultValue: U, f: (value: T) => U): U {
     return this.isNone() ? defaultValue : f((<Some<T>>this).value);
+  }
+
+  mapOrElse<U>(defaultFunc: () => U, f: (value: T) => U): U {
+    return this.isNone() ? defaultFunc() : f((<Some<T>>this).value);
   }
 }
 
