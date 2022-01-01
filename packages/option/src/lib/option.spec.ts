@@ -120,6 +120,15 @@ describe('Option<T>', () => {
     expect(sut.filter(isEven)).toEqual(result);
   });
 
+  it.each([
+    [new Some(2), new None(), new Some(2)],
+    [new None(), new Some(100), new Some(100)],
+    [new Some(2), new Some(100), new Some(2)],
+    [new None(), new None(), new None()],
+  ])('or()', (sut, optb, result) => {
+    expect(sut.or(optb)).toEqual(result);
+  });
+
   const nobody = (): Option<string> => new None();
   const vikings = (): Option<string> => new Some('vikings');
   it.each([

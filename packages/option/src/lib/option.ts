@@ -63,7 +63,11 @@ export abstract class Option<T> {
     return new None();
   }
 
-  orElse(fn: () => Option<T>): Option<T> { 
+  or(optB: Option<T>): Option<T> {
+    return this.isNone() ? optB : new Some((<Some<T>>this).value);
+  }
+
+  orElse(fn: () => Option<T>): Option<T> {
     return this.isNone() ? fn() : new Some((<Some<T>>this).value);
   }
 }
