@@ -88,4 +88,15 @@ describe('Option<T>', () => {
    ])('okOrElse()', (sut, result) => {
      expect(sut.okOrElse(() => 0)).toEqual(result);
    });
+  
+  // TODO: Implement Option.iter() once the Iterator library is available
+
+  it.each([
+    [new Some(2), new None, new None()],
+    [new None(), new Some('foo'), new None()],
+    [new Some(2), new Some('foo'), new Some('foo')],
+    [new None(), new None(), new None()],
+  ])('and()', (sut, other, result) => {
+    expect(sut.and(other)).toEqual(result);
+  });
 });
