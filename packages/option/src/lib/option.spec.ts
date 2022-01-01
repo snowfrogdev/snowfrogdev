@@ -111,4 +111,13 @@ describe('Option<T>', () => {
   ])('andThen()', (sut, f1, f2, result) => {
     expect(sut.andThen(f1).andThen(f2)).toEqual(result);
   });
+
+  it.each([
+    [new None(), new None()],
+    [new Some(3), new None()],
+    [new Some(4), new Some(4)],
+  ])('filter()', (sut, result) => {
+    const isEven = (x: number): boolean => x % 2 === 0;
+    expect(sut.filter(isEven)).toEqual(result);
+  });
 });

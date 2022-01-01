@@ -45,7 +45,7 @@ export abstract class Option<T> {
     return this.isNone() ? new Err(err) : new Ok((<Some<T>>this).value);
   }
 
-  okOrElse<E>(errFn: () => E): Result<T, E> { 
+  okOrElse<E>(errFn: () => E): Result<T, E> {
     return this.isNone() ? new Err(errFn()) : new Ok((<Some<T>>this).value);
   }
 
@@ -53,8 +53,14 @@ export abstract class Option<T> {
     return this.isNone() ? new None() : optB;
   }
 
-  andThen<U>(fn: (value: T) => Option<U>): Option<U> { 
+  andThen<U>(fn: (value: T) => Option<U>): Option<U> {
     return this.isNone() ? new None() : fn((<Some<T>>this).value);
+  }
+
+  filter(predicate: (value: T) => boolean): Option<T> {
+    if (this.isNone()) return new None();
+    if (predicate((<Some<T>>this).value)) return new Some((<Some<T>>this).value);
+    return new None();
   }
 }
 
