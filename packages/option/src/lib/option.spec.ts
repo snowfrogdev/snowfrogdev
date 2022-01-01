@@ -48,4 +48,10 @@ describe('Option<T>', () => {
   ])('unwrapOrElse()', (sut, result) => {
     expect(sut.unwrapOrElse(() => 2 * 10)).toBe(result);
   });
+
+  it('map()', () => {
+    const maybeSomeString = new Some('Hello, World!');
+    const maybeSomeLength = maybeSomeString.map(s => s.length);
+    expect(maybeSomeLength).toEqual(new Some(13));
+  });
 });

@@ -23,8 +23,12 @@ export abstract class Option<T> {
     return this.isNone() ? defaultValue : (<Some<T>>this).value;
   }
 
-  unwrapOrElse(fn: () => T): T { 
+  unwrapOrElse(fn: () => T): T {
     return this.isNone() ? fn() : (<Some<T>>this).value;
+  }
+
+  map<U>(f: (value: T) => U): Option<U> {
+    return this.isNone() ? new None() : new Some(f((<Some<T>>this).value));
   }
 }
 
