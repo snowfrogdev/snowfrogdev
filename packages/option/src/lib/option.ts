@@ -70,6 +70,12 @@ export abstract class Option<T> {
   orElse(fn: () => Option<T>): Option<T> {
     return this.isNone() ? fn() : new Some((<Some<T>>this).value);
   }
+
+  xor(optB: Option<T>): Option<T> {
+    if (this.isSome() && optB.isNone()) return new Some(this.value);
+    if (this.isNone() && optB.isSome()) return new Some(optB.value);
+    return new None();
+  }
 }
 
 export class Some<T> extends Option<T> {

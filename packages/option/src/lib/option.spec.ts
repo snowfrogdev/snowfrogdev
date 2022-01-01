@@ -138,4 +138,15 @@ describe('Option<T>', () => {
   ])('orElse()', (sut, func, result) => {
     expect(sut.orElse(func)).toEqual(result);
   });
+
+  it.each([
+    [new Some(2), new None(), new Some(2)],
+    [new None(), new Some(2), new Some(2)],
+    [new Some(2), new Some(2), new None()],
+    [new None(), new None(), new None()],
+  ])('xor()', (sut, optb, result) => {
+    expect(sut.xor(optb)).toEqual(result);
+  });
+
+
 });
