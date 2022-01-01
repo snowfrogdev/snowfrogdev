@@ -1,5 +1,15 @@
 {
   "name": "@snowfrog/result",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "description": "Type-safe error handling without exceptions.",
+  "keywords": ["result", "error", "exception", "try", "catch", "finally", "throw"],
+  "homepage": "https://snowfrogdev.github.io/snowfrogdev/result/",
+  "bugs": "https://github.com/snowfrogdev/snowfrogdev/issues",
+  "license": "MIT",
+  "author": "Philippe Vaillancourt <phil@snowfrog.dev> (http://snowfrog.dev)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowfrogdev/snowfrogdev.git"
+  },
   "type": "commonjs"
 }
