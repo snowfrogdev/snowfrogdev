@@ -1,0 +1,51 @@
+{
+  "root": "packages/option",
+  "sourceRoot": "packages/option/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/option",
+        "main": "packages/option/src/index.ts",
+        "tsConfig": "packages/option/tsconfig.lib.json",
+        "assets": ["packages/option/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/option/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/option"],
+      "options": {
+        "jestConfig": "packages/option/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npm publish --tag=latest --access public",
+        "cwd": "dist/packages/option"
+      }
+    },
+    "docs": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "command": "npx typedoc --options packages/option/typedoc.json",
+        "outputPath": "docs/option"
+      }
+    }
+  },
+  "tags": []
+}
