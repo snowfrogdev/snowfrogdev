@@ -1,3 +1,5 @@
+import { Err, Ok, Result } from '@snowfrog/result';
+
 export abstract class Option<T> {
   constructor(protected value: T) {}
 
@@ -37,6 +39,10 @@ export abstract class Option<T> {
 
   mapOrElse<U>(defaultFunc: () => U, f: (value: T) => U): U {
     return this.isNone() ? defaultFunc() : f((<Some<T>>this).value);
+  }
+
+  okOr<E>(err: E): Result<T, E> {
+    return this.isNone() ? new Err(err) : new Ok((<Some<T>>this).value);
   }
 }
 

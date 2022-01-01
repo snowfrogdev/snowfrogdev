@@ -1,3 +1,4 @@
+import { Err, Ok } from '@snowfrog/result';
 import { None, Some } from './option';
 
 describe('Option<T>', () => {
@@ -72,5 +73,12 @@ describe('Option<T>', () => {
         (str) => str.length
       )
     ).toBe(result);
+  });
+
+  it.each([
+    [new Some('foo'), new Ok('foo')],
+    [new None(), new Err(0)],
+  ])('okOr()', (sut, result) => {
+    expect(sut.okOr(0)).toEqual(result);
   });
 });
