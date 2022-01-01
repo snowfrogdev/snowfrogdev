@@ -1,9 +1,14 @@
 export abstract class Option<T> {
   constructor(protected value: T) { }
   
-  isSome(): boolean {
+  isSome(): this is Some<T> {
     return this instanceof Some;
   }
+
+  isNone(): this is None { 
+    return !this.isSome();
+  }
+
 }
 
 export class Some<T> extends Option<T> {
