@@ -1,9 +1,9 @@
-import { Some, None } from './option';
+import { None, Some } from './option';
 
 describe('Option<T>', () => {
   it.each([
     [new Some(2), true],
-    [new None(), false]
+    [new None(), false],
   ])('isSome()', (sut, result) => {
     expect(sut.isSome()).toBe(result);
   });
@@ -18,7 +18,7 @@ describe('Option<T>', () => {
   it('expect() when Some', () => {
     const sut = new Some('value');
     expect(sut.expect('fruits are healthy')).toBe('value');
-  })
+  });
 
   it('expect() when None', () => {
     const sut = new None();
@@ -34,5 +34,11 @@ describe('Option<T>', () => {
     const sut = new None();
     expect(() => sut.unwrap()).toThrowError('called `Option.unwrap()` on a `None` value');
   });
-  
+
+  it.each([
+    [new Some('car'), 'car'],
+    [new None(), 'bike'],
+  ])('unwrapOr()', (sut, result) => {
+    expect(sut.unwrapOr('bike')).toBe(result);
+  });
 });

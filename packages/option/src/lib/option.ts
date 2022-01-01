@@ -11,12 +11,16 @@ export abstract class Option<T> {
 
   expect(message: string): T {
     if (this.isNone()) throw new Error(message);
-    return this.value;
+    return (<Some<T>>this).value;
   }
 
   unwrap(): T {
     if (this.isNone()) throw new Error(`called \`Option.unwrap()\` on a \`None\` value`);
-    return this.value;
+    return (<Some<T>>this).value;
+  }
+
+  unwrapOr(defaultValue: T): T {
+    return this.isNone() ? defaultValue : (<Some<T>>this).value;
   }
 }
 
@@ -26,7 +30,7 @@ export class Some<T> extends Option<T> {
   }
 }
 
-export class None extends Option<null> {
+export class None extends Option<any> {
   constructor() {
     super(null);
   }
