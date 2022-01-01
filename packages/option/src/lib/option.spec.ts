@@ -148,5 +148,13 @@ describe('Option<T>', () => {
     expect(sut.xor(optb)).toEqual(result);
   });
 
+  it('zip()', () => {
+    const x = new Some(1);
+    const y = new Some('hi');
+    const z = new None();
+
+    expect(x.zip(y)).toEqual(new Some([1, 'hi']));
+    expect(x.zip(z)).toEqual(new None());
+  });
 
 });

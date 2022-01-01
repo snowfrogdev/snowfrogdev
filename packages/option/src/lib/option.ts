@@ -76,6 +76,11 @@ export abstract class Option<T> {
     if (this.isNone() && optB.isSome()) return new Some(optB.value);
     return new None();
   }
+
+  zip<U>(other: Option<U>): Option<[T, U]> {
+    if (this.isSome() && other.isSome()) return new Some([this.value, other.value]);
+    return new None();
+  }
 }
 
 export class Some<T> extends Option<T> {
