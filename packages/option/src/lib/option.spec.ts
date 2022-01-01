@@ -1,5 +1,5 @@
 import { Err, Ok } from '@snowfrog/result';
-import { None, Some, Option } from './option';
+import { None, Option, Some } from './option';
 
 describe('Option<T>', () => {
   it.each([
@@ -82,17 +82,17 @@ describe('Option<T>', () => {
     expect(sut.okOr(0)).toEqual(result);
   });
 
-   it.each([
-     [new Some('foo'), new Ok('foo')],
-     [new None(), new Err(0)],
-   ])('okOrElse()', (sut, result) => {
-     expect(sut.okOrElse(() => 0)).toEqual(result);
-   });
-  
+  it.each([
+    [new Some('foo'), new Ok('foo')],
+    [new None(), new Err(0)],
+  ])('okOrElse()', (sut, result) => {
+    expect(sut.okOrElse(() => 0)).toEqual(result);
+  });
+
   // TODO: Implement Option.iter() once the Iterator library is available
 
   it.each([
-    [new Some(2), new None, new None()],
+    [new Some(2), new None(), new None()],
     [new None(), new Some('foo'), new None()],
     [new Some(2), new Some('foo'), new Some('foo')],
     [new None(), new None(), new None()],
@@ -102,7 +102,6 @@ describe('Option<T>', () => {
 
   const sq = (x: number): Option<number> => new Some(x * x);
   const nope = (): Option<number> => new None();
-
   it.each([
     [new Some(2), sq, sq, new Some(16)],
     [new Some(2), sq, nope, new None()],
@@ -119,5 +118,15 @@ describe('Option<T>', () => {
   ])('filter()', (sut, result) => {
     const isEven = (x: number): boolean => x % 2 === 0;
     expect(sut.filter(isEven)).toEqual(result);
+  });
+
+  const nobody = (): Option<string> => new None();
+  const vikings = (): Option<string> => new Some('vikings');
+  it.each([
+    [new Some('barbarians'), vikings, new Some('barbarians')],
+    [new None(), vikings, new Some('vikings')],
+    [new None(), nobody, new None()],
+  ])('orElse()', (sut, func, result) => {
+    expect(sut.orElse(func)).toEqual(result);
   });
 });

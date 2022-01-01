@@ -62,6 +62,10 @@ export abstract class Option<T> {
     if (predicate((<Some<T>>this).value)) return new Some((<Some<T>>this).value);
     return new None();
   }
+
+  orElse(fn: () => Option<T>): Option<T> { 
+    return this.isNone() ? fn() : new Some((<Some<T>>this).value);
+  }
 }
 
 export class Some<T> extends Option<T> {
