@@ -22,6 +22,10 @@ export abstract class Option<T> {
   unwrapOr(defaultValue: T): T {
     return this.isNone() ? defaultValue : (<Some<T>>this).value;
   }
+
+  unwrapOrElse(fn: () => T): T { 
+    return this.isNone() ? fn() : (<Some<T>>this).value;
+  }
 }
 
 export class Some<T> extends Option<T> {

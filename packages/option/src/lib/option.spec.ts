@@ -41,4 +41,11 @@ describe('Option<T>', () => {
   ])('unwrapOr()', (sut, result) => {
     expect(sut.unwrapOr('bike')).toBe(result);
   });
+
+  it.each([
+    [new Some(4), 4],
+    [new None(), 20],
+  ])('unwrapOrElse()', (sut, result) => {
+    expect(sut.unwrapOrElse(() => 2 * 10)).toBe(result);
+  });
 });
