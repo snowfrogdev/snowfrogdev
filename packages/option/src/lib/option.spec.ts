@@ -81,4 +81,11 @@ describe('Option<T>', () => {
   ])('okOr()', (sut, result) => {
     expect(sut.okOr(0)).toEqual(result);
   });
+
+   it.each([
+     [new Some('foo'), new Ok('foo')],
+     [new None(), new Err(0)],
+   ])('okOrElse()', (sut, result) => {
+     expect(sut.okOrElse(() => 0)).toEqual(result);
+   });
 });

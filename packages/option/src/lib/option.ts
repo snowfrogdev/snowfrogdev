@@ -44,6 +44,10 @@ export abstract class Option<T> {
   okOr<E>(err: E): Result<T, E> {
     return this.isNone() ? new Err(err) : new Ok((<Some<T>>this).value);
   }
+
+  okOrElse<E>(errFn: () => E): Result<T, E> { 
+    return this.isNone() ? new Err(errFn()) : new Ok((<Some<T>>this).value);
+  }
 }
 
 export class Some<T> extends Option<T> {
