@@ -51,7 +51,14 @@ describe('Option<T>', () => {
 
   it('map()', () => {
     const maybeSomeString = new Some('Hello, World!');
-    const maybeSomeLength = maybeSomeString.map(s => s.length);
+    const maybeSomeLength = maybeSomeString.map((s) => s.length);
     expect(maybeSomeLength).toEqual(new Some(13));
+  });
+
+  it.each([
+    [new Some('foo'), 3],
+    [new None(), 42],
+  ])('mapOr()', (sut, result) => {
+    expect(sut.mapOr(42, (str) => str.length)).toBe(result);
   });
 });

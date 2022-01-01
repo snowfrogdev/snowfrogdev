@@ -30,6 +30,10 @@ export abstract class Option<T> {
   map<U>(f: (value: T) => U): Option<U> {
     return this.isNone() ? new None() : new Some(f((<Some<T>>this).value));
   }
+
+  mapOr<U>(defaultValue: U, f: (value: T) => U): U { 
+    return this.isNone() ? defaultValue : f((<Some<T>>this).value);
+  }
 }
 
 export class Some<T> extends Option<T> {
