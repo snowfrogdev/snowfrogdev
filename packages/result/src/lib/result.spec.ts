@@ -36,6 +36,14 @@ describe('Result<T, E>', () => {
     ).toBe(result);
   });
 
+    it.each([
+      [new Ok(2), new Ok(2)],
+      [new Err(13), new Err('error code: 13')],
+    ])('mapErr()', (sut, result) => {
+      const stringify = (x: number) => `error code: ${x}`;
+      expect(sut.mapErr(stringify)).toEqual(result);
+    });
+  
   /* TODO: Implement Result.iter() once the Iterator lib is done */
 
   it.each([
