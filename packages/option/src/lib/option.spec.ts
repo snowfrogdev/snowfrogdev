@@ -139,4 +139,13 @@ describe('Option<T>', () => {
     expect(x.zip(y)).toEqual(new Some([1, 'hi']));
     expect(x.zip(z)).toEqual(new None());
   });
+
+  it('zipWith()', () => {
+    const x = new Some(17.5);
+    const y = new Some(42.7);
+    const point = (x: number, y: number) => ({ x, y });
+
+    expect(x.zipWith(y, point)).toEqual(new Some({ x: 17.5, y: 42.7 }));
+    expect(x.zipWith(new None(), point)).toEqual(new None());
+  });
 });

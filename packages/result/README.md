@@ -49,7 +49,7 @@ const evenBetterResult: Result<boolean, number> = goodResult.andThen((x) => new 
 // Use `orElse` to handle the error.
 badResult = badResult.orElse((x) => new Ok(x + 20));
 
-// Consume the result and return the contents with `unwrap`.
+// Return the contents with `unwrap`.
 const finalAwesomeResult = evenBetterResult.unwrap();
 ```
 
@@ -100,8 +100,8 @@ These methods treat the `Result` as a boolean value, where `Ok` acts like true a
 
 The `and` and `or` methods take another `Result` as input, and produce a `Result` as output. The `and` method can produce a `Result<U, E>` value having a different inner type `U` than `Result<T, E>`. The `or` method can produce a `Result<T, F>` value having a different error type `F` than `Result<T, E>`.
 
-| method  | self     | input     | output   |
-|---------|----------|-----------|----------|
+| method  | this   | input     | output   |
+|---------|--------|-----------|----------|
 | `and` | `Err(e)` | (ignored) | `Err(e)` |
 | `and` | `Ok(x)`  | `Err(d)`  | `Err(d)` |
 | `and` | `Ok(x)`  | `Ok(y)`   | `Ok(y)`  |
@@ -112,14 +112,14 @@ The `and` and `or` methods take another `Result` as input, and produce a `Result
 The `andThen` and `orElse` methods take a function as input, and only evaluate the function when they need to
 produce a new value. The `andThen` method can produce a `Result<U, E>` value having a different inner type `U` than `Result<T, E>`. The `orElse` method can produce a `Result<T, F>` value having a different error type `F` than `Result<T, E>`.
 
-| method       | self     | function input | function result | output   |
-|--------------|----------|----------------|-----------------|----------|
-| `and_then` | `Err(e)` | (not provided) | (not evaluated) | `Err(e)` |
-| `and_then` | `Ok(x)`  | `x`            | `Err(d)`        | `Err(d)` |
-| `and_then` | `Ok(x)`  | `x`            | `Ok(y)`         | `Ok(y)`  |
-| `or_else`  | `Err(e)` | `e`            | `Err(d)`        | `Err(d)` |
-| `or_else`  | `Err(e)` | `e`            | `Ok(y)`         | `Ok(y)`  |
-| `or_else`  | `Ok(x)`  | (not provided) | (not evaluated) | `Ok(x)`  |
+| method    | this     | function input | function result | output   |
+|-----------|----------|----------------|-----------------|----------|
+| `andThen` | `Err(e)` | (not provided) | (not evaluated) | `Err(e)` |
+| `andThen` | `Ok(x)`  | `x`            | `Err(d)`        | `Err(d)` |
+| `andThen` | `Ok(x)`  | `x`            | `Ok(y)`         | `Ok(y)`  |
+| `orElse`  | `Err(e)` | `e`            | `Err(d)`        | `Err(d)` |
+| `orElse`  | `Err(e)` | `e`            | `Ok(y)`         | `Ok(y)`  |
+| `orElse`  | `Ok(x)`  | (not provided) | (not evaluated) | `Ok(x)`  |
 
 ## API Documentation
 
