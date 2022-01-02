@@ -282,7 +282,7 @@ export abstract class Result<T, E> {
   }
 
   /**
-   * Returns the contained [[OK]] value.
+   * Returns the contained [[Ok]] value.
    *
    * # Throws
    *
