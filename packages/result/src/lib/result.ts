@@ -1,5 +1,3 @@
-import { None, Option, Some } from '@snowfrog/option';
-
 /**
  * Result is an abstract class that represents either success [[Ok]] or failure [[Err]].
  * See the [module documentation](https://snowfrogdev.github.io/snowfrogdev/result/) for details.
@@ -32,44 +30,6 @@ export abstract class Result<T, E> {
    */
   isErr(): this is Err<E> {
     return !this.isOk();
-  }
-
-  /**
-   * Converts `this` from `Result<T, E>` to [`Option<E>`](https://snowfrogdev.github.io/snowfrogdev/option/classes/Option.html).
-   *
-   * # Examples
-   *
-   * Basic usage:
-   *
-   * ```ts
-   * const x = new Ok(2);
-   * expect(x.ok()).toEqual(new Some(2));
-   *
-   * const x = new Err("Nothing here");
-   * expect(x.ok()).toEqual(new None());
-   * ```
-   */
-  ok(): Option<T> {
-    return this.isOk() ? new Some(this.value as T) : new None();
-  }
-
-  /**
-   * Converts `this` from `Result<T, E>` to [`Option<E>`](https://snowfrogdev.github.io/snowfrogdev/option/classes/Option.html).
-   *
-   * # Examples
-   *
-   * Basic usage:
-   *
-   * ```ts
-   * const x = new Ok(2);
-   * expect(x.err()).toEqual(new None());
-   *
-   * const x = new Err("Nothing here");
-   * expect(x.err()).toEqual(new Some("Nothing here"));
-   * ```
-   */
-  err(): Option<E> {
-    return this.isErr() ? new Some(this.value as E) : new None();
   }
 
   /**

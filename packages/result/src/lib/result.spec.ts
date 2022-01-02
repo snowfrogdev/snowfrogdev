@@ -1,4 +1,3 @@
-import { None, Some } from '@snowfrog/option';
 import { Err, Ok } from './result';
 
 describe('Result<T, E>', () => {
@@ -14,20 +13,6 @@ describe('Result<T, E>', () => {
     [new Err('Some error message'), true],
   ])('isErr()', (sut, result) => {
     expect(sut.isErr()).toBe(result);
-  });
-
-  it.each([
-    [new Ok(2), new Some(2)],
-    [new Err('Nothing here'), new None()],
-  ])('ok()', (sut, result) => {
-    expect(sut.ok()).toEqual(result);
-  });
-
-  it.each([
-    [new Ok(2), new None()],
-    [new Err('Nothing here'), new Some('Nothing here')],
-  ])('err()', (sut, result) => {
-    expect(sut.err()).toEqual(result);
   });
 
   it.each([

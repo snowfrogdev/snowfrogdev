@@ -1,4 +1,3 @@
-import { Err, Ok } from '@snowfrog/result';
 import { None, Option, Some } from './option';
 
 describe('Option<T>', () => {
@@ -74,22 +73,6 @@ describe('Option<T>', () => {
       )
     ).toBe(result);
   });
-
-  it.each([
-    [new Some('foo'), new Ok('foo')],
-    [new None(), new Err(0)],
-  ])('okOr()', (sut, result) => {
-    expect(sut.okOr(0)).toEqual(result);
-  });
-
-  it.each([
-    [new Some('foo'), new Ok('foo')],
-    [new None(), new Err(0)],
-  ])('okOrElse()', (sut, result) => {
-    expect(sut.okOrElse(() => 0)).toEqual(result);
-  });
-
-  // TODO: Implement Option.iter() once the Iterator library is available
 
   it.each([
     [new Some(2), new None(), new None()],
