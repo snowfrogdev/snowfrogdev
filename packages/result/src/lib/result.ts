@@ -1,3 +1,5 @@
+import { None, Option, Some } from '@snowfrog/option';
+
 /**
  * Result is an abstract class that represents either success [[Ok]] or failure [[Err]].
  * See the [module documentation](https://snowfrogdev.github.io/snowfrogdev/result/) for details.
@@ -30,6 +32,10 @@ export abstract class Result<T, E> {
    */
   isErr(): this is Err<E> {
     return !this.isOk();
+  }
+
+  ok(): Option<T> {
+    return this.isOk() ? new Some(this.value as T) : new None();
   }
 
   /**

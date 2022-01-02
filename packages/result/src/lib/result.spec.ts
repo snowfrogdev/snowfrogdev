@@ -1,3 +1,4 @@
+import { None, Some } from '@snowfrog/option';
 import { Err, Ok } from './result';
 
 describe('Result<T, E>', () => {
@@ -15,7 +16,12 @@ describe('Result<T, E>', () => {
     expect(sut.isErr()).toBe(result);
   });
 
-  /* TODO: Implement Result.ok() and Result.err() once the Option<T> lib is done */
+  it.each([
+    [new Ok(2), new Some(2)],
+    [new Err('Nothing here'), new None()],
+  ])('ok()', (sut, result) => {
+    expect(sut.ok()).toEqual(result);
+  });
 
   it.each([
     [new Ok('foo'), 3],
@@ -36,14 +42,14 @@ describe('Result<T, E>', () => {
     ).toBe(result);
   });
 
-    it.each([
-      [new Ok(2), new Ok(2)],
-      [new Err(13), new Err('error code: 13')],
-    ])('mapErr()', (sut, result) => {
-      const stringify = (x: number) => `error code: ${x}`;
-      expect(sut.mapErr(stringify)).toEqual(result);
-    });
-  
+  it.each([
+    [new Ok(2), new Ok(2)],
+    [new Err(13), new Err('error code: 13')],
+  ])('mapErr()', (sut, result) => {
+    const stringify = (x: number) => `error code: ${x}`;
+    expect(sut.mapErr(stringify)).toEqual(result);
+  });
+
   /* TODO: Implement Result.iter() once the Iterator lib is done */
 
   it.each([
@@ -104,7 +110,9 @@ describe('Result<T, E>', () => {
   });
 
   it('expect() when Err', () => {
-    expect(() => new Err('emergency failure').expect('Testing expect')).toThrowError('Testing expect: emergency failure');
+    expect(() => new Err('emergency failure').expect('Testing expect')).toThrowError(
+      'Testing expect: emergency failure'
+    );
   });
 
   it('unwrap() when Ok', () => {
@@ -118,21 +126,21 @@ describe('Result<T, E>', () => {
 
   it('expectErr() when Err', () => {
     expect(new Err('foo').expectErr('Testing expectErr')).toBe('foo');
-  })
+  });
 
-  it('expectErr() when Ok', () => { 
+  it('expectErr() when Ok', () => {
     const result = 'Testing expectErr: 10';
     expect(() => new Ok(10).expectErr('Testing expectErr')).toThrowError(result);
-  })
+  });
 
   it('unwrapErr() when Ok', () => {
     const result = 'called `Result.unwrapErr()` on an `Ok` value: 2';
     expect(() => new Ok(2).unwrapErr()).toThrowError(result);
-  })
+  });
 
   it('unwrapErr() when Err', () => {
     expect(new Err('emergency failure').unwrapErr()).toBe('emergency failure');
-  })
+  });
 
   // TODO: Implement Result.transpose() once the Option<Result<T, E>> lib is done
 });
