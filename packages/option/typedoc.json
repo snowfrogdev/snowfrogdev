@@ -1,0 +1,7 @@
+{
+  "entryPoints": [
+    "src/index.ts"
+  ],
+  "out": "../../docs/option",
+  "tsconfig": "tsconfig.lib.json"
+}

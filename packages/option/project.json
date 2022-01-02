@@ -1,6 +1,6 @@
 {
-  "root": "packages/result",
-  "sourceRoot": "packages/result/src",
+  "root": "packages/option",
+  "sourceRoot": "packages/option/src",
   "projectType": "library",
   "targets": {
     "build": {
@@ -9,12 +9,13 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/packages/result",
-        "main": "packages/result/src/index.ts",
-        "tsConfig": "packages/result/tsconfig.lib.json",
+        "outputPath": "dist/packages/option",
+        "main": "packages/option/src/index.ts",
+        "tsConfig": "packages/option/tsconfig.lib.json",
         "assets": [
-          "packages/result/*.md"
-        ]
+          "packages/option/*.md"
+        ],
+        "packageJson": "packages/option/package.json"
       }
     },
     "lint": {
@@ -24,17 +25,17 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "packages/result/**/*.ts"
+          "packages/option/**/*.ts"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": [
-        "coverage/packages/result"
+        "coverage/packages/option"
       ],
       "options": {
-        "jestConfig": "packages/result/jest.config.js",
+        "jestConfig": "packages/option/jest.config.js",
         "passWithNoTests": true
       }
     },
@@ -43,7 +44,7 @@
       "outputs": [],
       "options": {
         "command": "npm publish --tag=latest --access public",
-        "cwd": "dist/packages/result"
+        "cwd": "dist/packages/option"
       }
     },
     "docs": {
@@ -52,8 +53,8 @@
         "{options.outputPath}"
       ],
       "options": {
-        "command": "npx typedoc --options packages/result/typedoc.json",
-        "outputPath": "docs/result"
+        "command": "npx typedoc --options packages/option/typedoc.json",
+        "outputPath": "docs/option"
       }
     }
   },
