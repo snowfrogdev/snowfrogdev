@@ -35,16 +35,16 @@ export abstract class Result<T, E> {
   }
 
   /**
-   * Converts `this` from `Result<T, E>` to [[Option<T>]].
-   * 
+   * Converts `this` from `Result<T, E>` to [`Option<E>`](https://snowfrogdev.github.io/snowfrogdev/option/classes/Option.html).
+   *
    * # Examples
-   * 
+   *
    * Basic usage:
-   * 
+   *
    * ```ts
    * const x = new Ok(2);
    * expect(x.ok()).toEqual(new Some(2));
-   * 
+   *
    * const x = new Err("Nothing here");
    * expect(x.ok()).toEqual(new None());
    * ```
@@ -54,16 +54,16 @@ export abstract class Result<T, E> {
   }
 
   /**
-   * Converts `this` from `Result<T, E>` to [[Option<E>]].
-   * 
+   * Converts `this` from `Result<T, E>` to [`Option<E>`](https://snowfrogdev.github.io/snowfrogdev/option/classes/Option.html).
+   *
    * # Examples
-   * 
+   *
    * Basic usage:
-   * 
+   *
    * ```ts
    * const x = new Ok(2);
    * expect(x.err()).toEqual(new None());
-   * 
+   *
    * const x = new Err("Nothing here");
    * expect(x.err()).toEqual(new Some("Nothing here"));
    * ```
@@ -322,7 +322,7 @@ export abstract class Result<T, E> {
   }
 
   /**
-   * Returns the contained [[OK]] value.
+   * Returns the contained [[Ok]] value.
    *
    * # Throws
    *
