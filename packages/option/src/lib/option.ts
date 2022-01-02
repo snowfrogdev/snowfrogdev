@@ -344,6 +344,28 @@ export abstract class Option<T> {
     if (this.isSome() && other.isSome()) return new Some([this.value, other.value]);
     return new None();
   }
+
+  /**
+   * Zips `this` and another `Option` with function `fn`.
+   * 
+   * If `this` is `Some(s)` and `other` is `Some(o)`, this method returns `Some(f([s, o]))`.
+   * Otherwise, it returns `None`.
+   * 
+   * # Examples
+   * 
+   * ```ts	
+   * const x = new Some(17.5);
+   * const y = new Some(42.7);
+   * const point = (x: number, y: number) => ({ x, y });
+   *
+   * expect(x.zipWith(y, point)).toEqual(new Some({ x: 17.5, y: 42.7 }));
+   * expect(x.zipWith(new None(), point)).toEqual(new None());
+   * ```
+   */
+  zipWith<U, R>(other: Option<U>, fn: (a: T, b: U) => R): Option<R> {
+    if (this.isSome() && other.isSome()) return new Some(fn(this.value, other.value));
+    return new None();
+  }
 }
 
 /**
