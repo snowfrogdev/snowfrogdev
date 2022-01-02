@@ -30,6 +30,8 @@ Functions should return `Result` whenever errors are expected and recoverable.
 `Result` comes with some convenience methods.
 
 ```ts
+import { Ok, Err, Result} from '@snowfrog/result';
+
 let goodResult: Result<number, number> = new Ok(10);
 let badResult: Result<number, number> = new Err(10);
 
