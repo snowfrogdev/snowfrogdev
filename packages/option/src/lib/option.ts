@@ -348,7 +348,7 @@ export abstract class Option<T> {
   /**
    * Zips `this` and another `Option` with function `fn`.
    * 
-   * If `this` is `Some(s)` and `other` is `Some(o)`, this method returns `Some(f([s, o]))`.
+   * If `this` is `Some(s)` and `other` is `Some(o)`, this method returns `Some(fn([s, o]))`.
    * Otherwise, it returns `None`.
    * 
    * # Examples
