@@ -75,11 +75,6 @@ They use `T`'s `toString()` implementation. If the `Result` is `Ok`:
 
 ### Transforming contained values
 
-These mehtods transform `Result` to [`Option`]([https](https://snowfrogdev.github.io/snowfrogdev/option/)):
-
-- `err` transforms `Result<T, E>` into `Option<E>`, mapping `Err(e)` to `Some(e)` and `Ok(v)` to `None`
-- `ok` transforms `Result<T, E>` into `Option<T>`, mapping `Ok(v)` to `Some(v)` and `Err(e)` to `None`
-
 This method transforms the contained value of the `Ok` variant:
 
 - `map` transforms `Result<T, E>` into `Result<U, E>` by applying the provided function to the contained value of `Ok`
