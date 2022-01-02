@@ -10,8 +10,8 @@
 <pre><code class="language-bash"><span class="hl-0">npm install @snowfrog/result</span>
 </code></pre>
 
-<a href="#error-handling" id="error-handling" style="color: inherit; text-decoration: none;">
-  <h2>Error Handling</h2>
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
 </a>
 <p>Errors are a fact of life in software development. In JavaScript, errors are usually thrown using the <code>throw</code> keyword
 and this approach makes sense when something bad happens in your code and there&#39;s nothing you can do about it.
@@ -20,9 +20,177 @@ the error.</p>
 <p>Most errors, though, aren&#39;t serious enough to require the program to stop entirely. Sometimes, when a function fails,
 it&#39;s for a reason that you can easily interpret and respond to. That&#39;s where <code>Result</code> comes in. It makes handling these
 common errors type-safe and explicit.</p>
+<p><code>Result&lt;T, E&gt;</code> is a type that represents a value that may or may not have succeeded. It&#39;s an abstract class with the
+implementations,<code>Ok&lt;T&gt;</code>, representing success and containing a value, and <code>Err&lt;E&gt;</code>, representing an error and
+containing an error value.</p>
+<p>Functions should return <code>Result</code> whenever errors are expected and recoverable.</p>
 
-<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
-  <h2>Documentation</h2>
+<a href="#method-overview" id="method-overview" style="color: inherit; text-decoration: none;">
+  <h2>Method overview</h2>
+</a>
+<p><code>Result</code> comes with some convenience methods.</p>
+<pre><code class="language-ts"><span class="hl-1">let</span><span class="hl-0"> </span><span class="hl-2">goodResult</span><span class="hl-0">: </span><span class="hl-3">Result</span><span class="hl-0">&lt;</span><span class="hl-3">number</span><span class="hl-0">, </span><span class="hl-3">number</span><span class="hl-0">&gt; = </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-4">Ok</span><span class="hl-0">(</span><span class="hl-5">10</span><span class="hl-0">);</span><br/><span class="hl-1">let</span><span class="hl-0"> </span><span class="hl-2">badResult</span><span class="hl-0">: </span><span class="hl-3">Result</span><span class="hl-0">&lt;</span><span class="hl-3">number</span><span class="hl-0">, </span><span class="hl-3">number</span><span class="hl-0">&gt; = </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-4">Err</span><span class="hl-0">(</span><span class="hl-5">10</span><span class="hl-0">);</span><br/><br/><span class="hl-6">// The `isOk` and `isErr` methods do what they say.</span><br/><span class="hl-4">expect</span><span class="hl-0">(</span><span class="hl-2">goodResult</span><span class="hl-0">.</span><span class="hl-4">isOk</span><span class="hl-0">() &amp;&amp; !</span><span class="hl-2">goodResult</span><span class="hl-0">.</span><span class="hl-4">isErr</span><span class="hl-0">()).</span><span class="hl-4">toBe</span><span class="hl-0">(</span><span class="hl-1">true</span><span class="hl-0">);</span><br/><span class="hl-4">expect</span><span class="hl-0">(</span><span class="hl-2">badResult</span><span class="hl-0">.</span><span class="hl-4">isErr</span><span class="hl-0">() &amp;&amp; !</span><span class="hl-2">badResult</span><span class="hl-0">.</span><span class="hl-4">isOk</span><span class="hl-0">()).</span><span class="hl-4">toBe</span><span class="hl-0">(</span><span class="hl-1">true</span><span class="hl-0">);</span><br/><br/><span class="hl-6">// `map` consumes the `Result` and produces another.</span><br/><span class="hl-2">goodResult</span><span class="hl-0"> = </span><span class="hl-2">goodResult</span><span class="hl-0">.</span><span class="hl-4">map</span><span class="hl-0">((</span><span class="hl-2">x</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> </span><span class="hl-2">x</span><span class="hl-0"> + </span><span class="hl-5">1</span><span class="hl-0">);</span><br/><span class="hl-2">badResult</span><span class="hl-0"> = </span><span class="hl-2">badResult</span><span class="hl-0">.</span><span class="hl-4">map</span><span class="hl-0">((</span><span class="hl-2">x</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> </span><span class="hl-2">x</span><span class="hl-0"> - </span><span class="hl-5">1</span><span class="hl-0">);</span><br/><br/><span class="hl-6">// Use `andThen` to continue the computation.</span><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-7">evenBetterResult</span><span class="hl-0">: </span><span class="hl-3">Result</span><span class="hl-0">&lt;</span><span class="hl-3">boolean</span><span class="hl-0">, </span><span class="hl-3">number</span><span class="hl-0">&gt; = </span><span class="hl-2">goodResult</span><span class="hl-0">.</span><span class="hl-4">andThen</span><span class="hl-0">((</span><span class="hl-2">x</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-4">Ok</span><span class="hl-0">(</span><span class="hl-2">x</span><span class="hl-0"> === </span><span class="hl-5">11</span><span class="hl-0">));</span><br/><br/><span class="hl-6">// Use `orElse` to handle the error.</span><br/><span class="hl-2">badResult</span><span class="hl-0"> = </span><span class="hl-2">badResult</span><span class="hl-0">.</span><span class="hl-4">orElse</span><span class="hl-0">((</span><span class="hl-2">x</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-4">Ok</span><span class="hl-0">(</span><span class="hl-2">x</span><span class="hl-0"> + </span><span class="hl-5">20</span><span class="hl-0">));</span><br/><br/><span class="hl-6">// Consume the result and return the contents with `unwrap`.</span><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-7">finalAwesomeResult</span><span class="hl-0"> = </span><span class="hl-2">evenBetterResult</span><span class="hl-0">.</span><span class="hl-4">unwrap</span><span class="hl-0">();</span>
+</code></pre>
+
+<a href="#querying-the-variant" id="querying-the-variant" style="color: inherit; text-decoration: none;">
+  <h3>Querying the variant</h3>
+</a>
+<p>The <code>isOk</code> and <code>isErr</code> methods return <code>true</code> if the <code>Result</code> is <code>Ok</code> or <code>Err</code>, respectively.</p>
+
+<a href="#extracting-contained-values" id="extracting-contained-values" style="color: inherit; text-decoration: none;">
+  <h3>Extracting contained values</h3>
+</a>
+<p>These methods extract the contained value in a <code>Result&lt;T, E&gt;</code> when it is the <code>Ok</code> variant.
+If the <code>Result</code> is <code>Err</code>:</p>
+<ul>
+<li><code>expect</code> throws with a provided custom message</li>
+<li><code>unwrap</code> throws with a generic message</li>
+<li><code>unwrapOr</code> returns the provided default value</li>
+<li><code>unwrapOrElse</code> returns the result of evaluating the provided function</li>
+</ul>
+<p>The throwing methods <code>expect</code> and <code>unwrap</code> rely on <code>E</code>&#39;s <code>toString()</code> implementation.</p>
+<p>These methods extract the contained value in a <code>Result&lt;T, E&gt;</code> when it is the <code>Err</code> variant.
+They use <code>T</code>&#39;s <code>toString()</code> implementation. If the <code>Result</code> is <code>Ok</code>:</p>
+<ul>
+<li><code>expectErr</code> throws with a provided custom message</li>
+<li><code>unwrapErr</code> throws with a generic message</li>
+</ul>
+
+<a href="#transforming-contained-values" id="transforming-contained-values" style="color: inherit; text-decoration: none;">
+  <h3>Transforming contained values</h3>
+</a>
+<p>These mehtods transform <code>Result</code> to <a href="%5Bhttps%5D(https://snowfrogdev.github.io/snowfrogdev/option/)"><code>Option</code></a>:</p>
+<ul>
+<li><code>err</code> transforms <code>Result&lt;T, E&gt;</code> into <code>Option&lt;E&gt;</code>, mapping <code>Err(e)</code> to <code>Some(e)</code> and <code>Ok(v)</code> to <code>None</code></li>
+<li><code>ok</code> transforms <code>Result&lt;T, E&gt;</code> into <code>Option&lt;T&gt;</code>, mapping <code>Ok(v)</code> to <code>Some(v)</code> and <code>Err(e)</code> to <code>None</code></li>
+</ul>
+<p>This method transforms the contained value of the <code>Ok</code> variant:</p>
+<ul>
+<li><code>map</code> transforms <code>Result&lt;T, E&gt;</code> into <code>Result&lt;U, E&gt;</code> by applying the provided function to the contained value of <code>Ok</code>
+and leaving <code>Err</code> values unchanged</li>
+</ul>
+<p>This method transforms the contained value of the <code>Err</code> variant:</p>
+<ul>
+<li><code>mapErr</code> transforms <code>Result&lt;T, E&gt;</code> into <code>Result&lt;T, F&gt;</code> by applying the provided function to the contained value of <code>Err</code>
+and leaving <code>Ok</code> values unchanged</li>
+</ul>
+<p>These methods transform a <code>Result&lt;T, E&gt;</code> into a value of a possibly different type <code>U</code>:</p>
+<ul>
+<li><code>mapOr</code> applies the provided function to the contained value of <code>Ok</code>, or returns the provided default value if the
+<code>Result</code> is <code>Err</code></li>
+<li><code>mapOrElse</code> applies the provided function to the contained value of <code>Ok</code>, or applies the provided default fallback
+function to the contained value of <code>Err</code></li>
+</ul>
+
+<a href="#boolean-operators" id="boolean-operators" style="color: inherit; text-decoration: none;">
+  <h3>Boolean operators</h3>
+</a>
+<p>These methods treat the <code>Result</code> as a boolean value, where <code>Ok</code> acts like true and <code>Err</code> acts like false. There are two categories of these methods: ones that take a <code>Result</code> as input, and ones that take a function as input (to be lazily evaluated).</p>
+<p>The <code>and</code> and <code>or</code> methods take another <code>Result</code> as input, and produce a <code>Result</code> as output. The <code>and</code> method can produce a <code>Result&lt;U, E&gt;</code> value having a different inner type <code>U</code> than <code>Result&lt;T, E&gt;</code>. The <code>or</code> method can produce a <code>Result&lt;T, F&gt;</code> value having a different error type <code>F</code> than <code>Result&lt;T, E&gt;</code>.</p>
+<table>
+<thead>
+<tr>
+<th>method</th>
+<th>self</th>
+<th>input</th>
+<th>output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>and</code></td>
+<td><code>Err(e)</code></td>
+<td>(ignored)</td>
+<td><code>Err(e)</code></td>
+</tr>
+<tr>
+<td><code>and</code></td>
+<td><code>Ok(x)</code></td>
+<td><code>Err(d)</code></td>
+<td><code>Err(d)</code></td>
+</tr>
+<tr>
+<td><code>and</code></td>
+<td><code>Ok(x)</code></td>
+<td><code>Ok(y)</code></td>
+<td><code>Ok(y)</code></td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td><code>Err(e)</code></td>
+<td><code>Err(d)</code></td>
+<td><code>Err(d)</code></td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td><code>Err(e)</code></td>
+<td><code>Ok(y)</code></td>
+<td><code>Ok(y)</code></td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td><code>Ok(x)</code></td>
+<td>(ignored)</td>
+<td><code>Ok(x)</code></td>
+</tr>
+</tbody></table>
+<p>The <code>andThen</code> and <code>orElse</code> methods take a function as input, and only evaluate the function when they need to
+produce a new value. The <code>andThen</code> method can produce a <code>Result&lt;U, E&gt;</code> value having a different inner type <code>U</code> than <code>Result&lt;T, E&gt;</code>. The <code>orElse</code> method can produce a <code>Result&lt;T, F&gt;</code> value having a different error type <code>F</code> than <code>Result&lt;T, E&gt;</code>.</p>
+<table>
+<thead>
+<tr>
+<th>method</th>
+<th>self</th>
+<th>function input</th>
+<th>function result</th>
+<th>output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>and_then</code></td>
+<td><code>Err(e)</code></td>
+<td>(not provided)</td>
+<td>(not evaluated)</td>
+<td><code>Err(e)</code></td>
+</tr>
+<tr>
+<td><code>and_then</code></td>
+<td><code>Ok(x)</code></td>
+<td><code>x</code></td>
+<td><code>Err(d)</code></td>
+<td><code>Err(d)</code></td>
+</tr>
+<tr>
+<td><code>and_then</code></td>
+<td><code>Ok(x)</code></td>
+<td><code>x</code></td>
+<td><code>Ok(y)</code></td>
+<td><code>Ok(y)</code></td>
+</tr>
+<tr>
+<td><code>or_else</code></td>
+<td><code>Err(e)</code></td>
+<td><code>e</code></td>
+<td><code>Err(d)</code></td>
+<td><code>Err(d)</code></td>
+</tr>
+<tr>
+<td><code>or_else</code></td>
+<td><code>Err(e)</code></td>
+<td><code>e</code></td>
+<td><code>Ok(y)</code></td>
+<td><code>Ok(y)</code></td>
+</tr>
+<tr>
+<td><code>or_else</code></td>
+<td><code>Ok(x)</code></td>
+<td>(not provided)</td>
+<td>(not evaluated)</td>
+<td><code>Ok(x)</code></td>
+</tr>
+</tbody></table>
+
+<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
+  <h2>API Documentation</h2>
 </a>
 <p><a href="https://snowfrogdev.github.io/snowfrogdev/result/">https://snowfrogdev.github.io/snowfrogdev/result/</a></p>
 
