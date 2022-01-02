@@ -25,7 +25,7 @@ describe('Result<T, E>', () => {
 
   it.each([
     [new Ok(2), new None()],
-    [new Err('Nothing here'), new Some("Nothing here")],
+    [new Err('Nothing here'), new Some('Nothing here')],
   ])('err()', (sut, result) => {
     expect(sut.err()).toEqual(result);
   });
@@ -148,6 +148,4 @@ describe('Result<T, E>', () => {
   it('unwrapErr() when Err', () => {
     expect(new Err('emergency failure').unwrapErr()).toBe('emergency failure');
   });
-
-  // TODO: Implement Result.transpose() once the Option<Result<T, E>> lib is done
 });
