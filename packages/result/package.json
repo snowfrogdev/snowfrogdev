@@ -1,8 +1,16 @@
 {
   "name": "@snowfrog/result",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Type-safe error handling without exceptions.",
-  "keywords": ["result", "error", "exception", "try", "catch", "finally", "throw"],
+  "keywords": [
+    "result",
+    "error",
+    "exception",
+    "try",
+    "catch",
+    "finally",
+    "throw"
+  ],
   "homepage": "https://snowfrogdev.github.io/snowfrogdev/result/",
   "bugs": "https://github.com/snowfrogdev/snowfrogdev/issues",
   "license": "MIT",
