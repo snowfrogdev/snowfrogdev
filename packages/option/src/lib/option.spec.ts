@@ -156,5 +156,4 @@ describe('Option<T>', () => {
     expect(x.zip(y)).toEqual(new Some([1, 'hi']));
     expect(x.zip(z)).toEqual(new None());
   });
-
 });
