@@ -14,7 +14,8 @@
         "tsConfig": "packages/result/tsconfig.lib.json",
         "assets": [
           "packages/result/*.md"
-        ]
+        ],
+        "packageJson": "packages/result/package.json"
       }
     },
     "lint": {
