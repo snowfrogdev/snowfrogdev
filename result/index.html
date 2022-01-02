@@ -59,11 +59,6 @@ They use <code>T</code>&#39;s <code>toString()</code> implementation. If the <co
 <a href="#transforming-contained-values" id="transforming-contained-values" style="color: inherit; text-decoration: none;">
   <h3>Transforming contained values</h3>
 </a>
-<p>These mehtods transform <code>Result</code> to <a href="%5Bhttps%5D(https://snowfrogdev.github.io/snowfrogdev/option/)"><code>Option</code></a>:</p>
-<ul>
-<li><code>err</code> transforms <code>Result&lt;T, E&gt;</code> into <code>Option&lt;E&gt;</code>, mapping <code>Err(e)</code> to <code>Some(e)</code> and <code>Ok(v)</code> to <code>None</code></li>
-<li><code>ok</code> transforms <code>Result&lt;T, E&gt;</code> into <code>Option&lt;T&gt;</code>, mapping <code>Ok(v)</code> to <code>Some(v)</code> and <code>Err(e)</code> to <code>None</code></li>
-</ul>
 <p>This method transforms the contained value of the <code>Ok</code> variant:</p>
 <ul>
 <li><code>map</code> transforms <code>Result&lt;T, E&gt;</code> into <code>Result&lt;U, E&gt;</code> by applying the provided function to the contained value of <code>Ok</code>
