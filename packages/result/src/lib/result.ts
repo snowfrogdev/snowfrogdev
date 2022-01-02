@@ -323,7 +323,7 @@ export abstract class Result<T, E> {
    * expect(x.unwrap()).toBe(2);
    *
    * const x = new Err("emergency failure");
-   * x.unwrap(); // throws and Error with `emergency failure`
+   * x.unwrap(); // throws an Error with `emergency failure`
    * ```
    */
   unwrap(): T {
