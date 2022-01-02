@@ -34,8 +34,42 @@ export abstract class Result<T, E> {
     return !this.isOk();
   }
 
+  /**
+   * Converts `this` from `Result<T, E>` to [[Option<T>]].
+   * 
+   * # Examples
+   * 
+   * Basic usage:
+   * 
+   * ```ts
+   * const x = new Ok(2);
+   * expect(x.ok()).toEqual(new Some(2));
+   * 
+   * const x = new Err("Nothing here");
+   * expect(x.ok()).toEqual(new None());
+   * ```
+   */
   ok(): Option<T> {
     return this.isOk() ? new Some(this.value as T) : new None();
+  }
+
+  /**
+   * Converts `this` from `Result<T, E>` to [[Option<E>]].
+   * 
+   * # Examples
+   * 
+   * Basic usage:
+   * 
+   * ```ts
+   * const x = new Ok(2);
+   * expect(x.err()).toEqual(new None());
+   * 
+   * const x = new Err("Nothing here");
+   * expect(x.err()).toEqual(new Some("Nothing here"));
+   * ```
+   */
+  err(): Option<E> {
+    return this.isErr() ? new Some(this.value as E) : new None();
   }
 
   /**

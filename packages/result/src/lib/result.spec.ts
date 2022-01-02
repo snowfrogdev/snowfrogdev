@@ -24,6 +24,13 @@ describe('Result<T, E>', () => {
   });
 
   it.each([
+    [new Ok(2), new None()],
+    [new Err('Nothing here'), new Some("Nothing here")],
+  ])('err()', (sut, result) => {
+    expect(sut.err()).toEqual(result);
+  });
+
+  it.each([
     [new Ok('foo'), 3],
     [new Err('bar'), 42],
   ])('mapOr()', (sut, result) => {
