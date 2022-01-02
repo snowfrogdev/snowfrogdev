@@ -1,6 +1,6 @@
 {
   "name": "@snowfrog/result",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Type-safe error handling without exceptions.",
   "keywords": [
     "result",
