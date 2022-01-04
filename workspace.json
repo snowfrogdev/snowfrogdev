@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "iter": "packages/iter",
     "option": "packages/option",
     "result": "packages/result"
   }

@@ -1,0 +1,52 @@
+{
+  "root": "packages/iter",
+  "sourceRoot": "packages/iter/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/iter",
+        "tsConfig": "packages/iter/tsconfig.lib.json",
+        "packageJson": "packages/iter/package.json",
+        "main": "packages/iter/src/index.ts",
+        "assets": ["packages/iter/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/iter/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/iter"],
+      "options": {
+        "jestConfig": "packages/iter/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npm publish --tag=latest --access public",
+        "cwd": "dist/packages/iter"
+      }
+    },
+    "docs": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "command": "npx typedoc --options packages/iter/typedoc.json",
+        "outputPath": "docs/iter"
+      }
+    }
+  },
+  "tags": []
+}

@@ -15,8 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@snowfrog/result": ["packages/result/src/index.ts"],
-      "@snowfrog/option": ["packages/option/src/index.ts"]
+      "@snowfrog/iter": ["packages/iter/src/index.ts"],
+      "@snowfrog/option": ["packages/option/src/index.ts"],
+      "@snowfrog/result": ["packages/result/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

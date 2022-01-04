@@ -1,0 +1,7 @@
+{
+  "entryPoints": [
+    "src/index.ts"
+  ],
+  "out": "../../docs/iter",
+  "tsconfig": "tsconfig.lib.json"
+}
