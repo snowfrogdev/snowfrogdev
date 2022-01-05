@@ -1,1 +1,1 @@
-export { Filter, Iter } from './lib/internal';
+export { FilterIter as Filter, ToIter as Iter } from './lib/internal';

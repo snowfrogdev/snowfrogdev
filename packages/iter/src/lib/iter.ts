@@ -1,22 +1,11 @@
 import { None, Option, Some } from '@snowfrog/option';
-import { Filter } from './internal';
+import { FilterIter, MapIter } from './internal';
 
-export class Iter<T> implements Iterable<T> {
-  protected constructor(private iterator: Iterator<T>) {}
-  static from<T>(iterable: Iterable<T>): Iter<T> {
-    return new Iter(iterable[Symbol.iterator]());
-  }
+export abstract class Iter<T> implements Iterable<T> {
+  abstract next(): Option<T>;
+  abstract [Symbol.iterator](): Iterator<T>;
 
-  [Symbol.iterator](): Iterator<T> {
-    return this.iterator;
-  }
-
-  next(): Option<T> {
-    const { done, value } = this.iterator.next();
-    return done ? new None() : new Some(value);
-  }
-
-  count(): number { 
+  count(): number {
     let count = 0;
     for (const _ of this) {
       count++;
@@ -33,8 +22,12 @@ export class Iter<T> implements Iterable<T> {
     return new None();
   }
 
-  filter<P extends (item: T) => boolean>(predicate: P): Filter<this, T> {
-    return new Filter(this, predicate);
+  map<B>(f: (item: T) => B): MapIter<this, T, B> {
+    return new MapIter(this, f);
+  }
+
+  filter<P extends (item: T) => boolean>(predicate: P): FilterIter<this, T> {
+    return new FilterIter(this, predicate);
   }
 
   toArray(): T[] {
