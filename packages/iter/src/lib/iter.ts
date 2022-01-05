@@ -1,7 +1,8 @@
 import { None, Option, Some } from '@snowfrog/option';
+import { Filter } from './internal';
 
 export class Iter<T> implements Iterable<T> {
-  private constructor(private iterator: Iterator<T>) {}
+  protected constructor(private iterator: Iterator<T>) {}
   static from<T>(iterable: Iterable<T>): Iter<T> {
     return new Iter(iterable[Symbol.iterator]());
   }
@@ -30,6 +31,10 @@ export class Iter<T> implements Iterable<T> {
       }
     }
     return new None();
+  }
+
+  filter<P extends (item: T) => boolean>(predicate: P): Filter<this, T> {
+    return new Filter(this, predicate);
   }
 
   toArray(): T[] {

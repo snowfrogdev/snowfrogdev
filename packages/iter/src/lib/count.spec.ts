@@ -1,4 +1,4 @@
-import { Iter } from "./iter";
+import { Iter } from "./internal";
 
 describe('Iter', () => {
   it.each([

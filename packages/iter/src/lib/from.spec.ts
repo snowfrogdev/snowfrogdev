@@ -1,5 +1,5 @@
 import { None, Some } from '@snowfrog/option';
-import { Iter } from './iter';
+import { Iter } from './internal';
 
 describe('Iter', () => {
   it('from() for Array', () => {
