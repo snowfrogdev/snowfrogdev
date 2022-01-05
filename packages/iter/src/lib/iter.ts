@@ -39,4 +39,8 @@ export class Iter<T> implements Iterable<T> {
   toSet(): Set<T> {
     return new Set(this);
   }
+
+  toMap<K, V>(this: Iter<[K, V]>): Map<K, V> {
+    return new Map(this);
+  }
 }

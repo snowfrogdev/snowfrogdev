@@ -63,11 +63,8 @@ describe('Iter', () => {
     expect(map).toEqual(expected);
   });
 
-  xit('to Map using Iter.toMap()', () => {
-    // TODO: Fix this test and find a way to implement toMap() with
-    // geneic type T being unrestricted whil the map constructor requires
-    // T to be a tuple of [K, V]
-    /* const iter = Iter.from<[number, string]>([
+  it('to Map using Iter.toMap()', () => {
+    const iter = Iter.from<[number, string]>([
       [1, 'one'],
       [2, 'two'],
       [3, 'three'],
@@ -75,12 +72,12 @@ describe('Iter', () => {
 
     const expected = new Map();
     expected.set(1, 'one');
-    expected.set(2, 'one');
-    expected.set(3, 'one');
+    expected.set(2, 'two');
+    expected.set(3, 'three');
 
     const map = iter.toMap();
 
-    expect(map).toBeInstanceOf(Set);
-    expect(map).toEqual(expected); */
+    expect(map).toBeInstanceOf(Map);
+    expect(map).toEqual(expected);
   });
 });
