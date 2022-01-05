@@ -1,10 +1,10 @@
 import { None, Some } from '@snowfrog/option';
-import { ToIter } from '../internal';
+import { Iter } from '../internal';
 
 describe('Iter', () => {
   it('from() for Array', () => {
     const arr = [1, 2, 3];
-    const iter = ToIter.from(arr);
+    const iter = Iter.from(arr);
 
     expect(iter.next()).toEqual(new Some(1));
     expect(iter.next()).toEqual(new Some(2));
@@ -14,7 +14,7 @@ describe('Iter', () => {
 
   it('from() for Set', () => {
     const set = new Set([1, 2, 3]);
-    const iter = ToIter.from(set);
+    const iter = Iter.from(set);
 
     expect(iter.next()).toEqual(new Some(1));
     expect(iter.next()).toEqual(new Some(2));
@@ -28,7 +28,7 @@ describe('Iter', () => {
       [2, 'two'],
       [3, 'three'],
     ]);
-    const iter = ToIter.from(map);
+    const iter = Iter.from(map);
 
     expect(iter.next()).toEqual(new Some([1, 'one']));
     expect(iter.next()).toEqual(new Some([2, 'two']));
@@ -37,7 +37,7 @@ describe('Iter', () => {
   });
 
   it('from() for String', () => {
-    const iter = ToIter.from('hello');
+    const iter = Iter.from('hello');
 
     expect(iter.next()).toEqual(new Some('h'));
     expect(iter.next()).toEqual(new Some('e'));
@@ -49,7 +49,7 @@ describe('Iter', () => {
 
   it('from() for TypeArray', () => {
     const arr = new Int8Array([1, 2, 3]);
-    const iter = ToIter.from(arr);
+    const iter = Iter.from(arr);
 
     expect(iter.next()).toEqual(new Some(1));
     expect(iter.next()).toEqual(new Some(2));

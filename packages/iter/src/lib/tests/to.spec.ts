@@ -1,8 +1,8 @@
-import { ToIter } from '../internal';
+import { Iter } from '../internal';
 
-describe('ToIter', () => {
+describe('Iter', () => {
   it('to Array using spread operator', () => {
-    const iter = ToIter.from([1, 2, 3]);
+    const iter = Iter.from([1, 2, 3]);
     const arr = [...iter];
 
     expect(arr).toBeInstanceOf(Array);
@@ -10,7 +10,7 @@ describe('ToIter', () => {
   });
 
   it('to Array using Iter.toArray()', () => {
-    const iter = ToIter.from([1, 2, 3]);
+    const iter = Iter.from([1, 2, 3]);
     const arr = iter.toArray();
 
     expect(arr).toBeInstanceOf(Array);
@@ -18,7 +18,7 @@ describe('ToIter', () => {
   });
 
   it('to Set using Set constructor', () => {
-    const iter = ToIter.from([1, 2, 3]);
+    const iter = Iter.from([1, 2, 3]);
 
     const expected = new Set();
     expected.add(1);
@@ -32,7 +32,7 @@ describe('ToIter', () => {
   });
 
   it('to Set using Iter.toSet()', () => {
-    const iter = ToIter.from([1, 2, 3]);
+    const iter = Iter.from([1, 2, 3]);
 
     const expected = new Set();
     expected.add(1);
@@ -46,7 +46,7 @@ describe('ToIter', () => {
   });
 
   it('to Map using Map constructor', () => {
-    const iter = ToIter.from<[number, string]>([
+    const iter = Iter.from<[number, string]>([
       [1, 'one'],
       [2, 'two'],
       [3, 'three'],
@@ -64,7 +64,7 @@ describe('ToIter', () => {
   });
 
   it('to Map using Iter.toMap()', () => {
-    const iter = ToIter.from<[number, string]>([
+    const iter = Iter.from<[number, string]>([
       [1, 'one'],
       [2, 'two'],
       [3, 'three'],

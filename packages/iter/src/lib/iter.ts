@@ -1,9 +1,13 @@
 import { None, Option, Some } from '@snowfrog/option';
-import { FilterIter, MapIter } from './internal';
+import { FilterIter, MapIter, ToIter } from './internal';
 
 export abstract class Iter<T> implements Iterable<T> {
   abstract next(): Option<T>;
   abstract [Symbol.iterator](): Iterator<T>;
+
+  static from<T>(iterable: Iterable<T>): Iter<T> {
+    return ToIter.from(iterable);
+  }
 
   count(): number {
     let count = 0;
