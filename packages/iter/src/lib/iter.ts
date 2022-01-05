@@ -23,6 +23,15 @@ export class Iter<T> implements Iterable<T> {
     return count;
   }
 
+  find(predicate: (item: T) => boolean): Option<T> {
+    for (const item of this) {
+      if (predicate(item)) {
+        return new Some(item);
+      }
+    }
+    return new None();
+  }
+
   toArray(): T[] {
     return [...this];
   }
