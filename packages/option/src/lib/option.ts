@@ -7,30 +7,14 @@
  */
 export abstract class Option<T> {
   /**
-   * @ignore
-   */
-  protected value: T;
-
-  /**
-   * @ignore
-   */
-  constructor(value: T) {
-    this.value = value;
-  }
-
-  /**
    * Returns `true` if the option is a [[`Some`]] value.
    */
-  isSome(): this is Some<T> {
-    return this instanceof Some;
-  }
+  abstract isSome(): this is Some<T>;
 
   /**
    * Returns `true` if the option is a [[`None`]] value.
    */
-  isNone(): this is None {
-    return !this.isSome();
-  }
+  abstract isNone(): this is None;
 
   /**
    * Returns the contained [[`Some`]] value.
@@ -50,10 +34,7 @@ export abstract class Option<T> {
    * x.expect("fruits are healthy"); // throws with "fruits are healthy"
    * ```
    */
-  expect(message: string): T {
-    if (this.isNone()) throw new Error(message);
-    return (<Some<T>>this).value;
-  }
+  abstract expect(message: string): T;
 
   /**
    * Returns the contained [[`Some`]] value.
@@ -76,10 +57,7 @@ export abstract class Option<T> {
    * x.unwrap(); // throws an Error
    * ```
    */
-  unwrap(): T {
-    if (this.isNone()) throw new Error(`called \`Option.unwrap()\` on a \`None\` value`);
-    return (<Some<T>>this).value;
-  }
+  abstract unwrap(): T;
 
   /**
    * Returns the contained [[`Some`]] value or a provided default.
@@ -95,9 +73,7 @@ export abstract class Option<T> {
    * expect(new None().unwrapOr("bike")).toBe("bike");
    * ```
    */
-  unwrapOr(defaultValue: T): T {
-    return this.isNone() ? defaultValue : (<Some<T>>this).value;
-  }
+  abstract unwrapOr(defaultValue: T): T;
 
   /**
    * Returns the contained [[`Some`]] value or computes it from a provided function.
@@ -109,9 +85,7 @@ export abstract class Option<T> {
    * expect(new None().unwrapOrElse(() => 2 * 10)).toBe(20);
    * ```
    */
-  unwrapOrElse(fn: () => T): T {
-    return this.isNone() ? fn() : (<Some<T>>this).value;
-  }
+  abstract unwrapOrElse(fn: () => T): T;
 
   /**
    * Maps an `Option<T>` to an `Option<U>` by applying a function to a contained value.
@@ -127,9 +101,7 @@ export abstract class Option<T> {
    * expect (maybeSomeLength).toEqual(new Some(13));
    * ```
    */
-  map<U>(f: (value: T) => U): Option<U> {
-    return this.isNone() ? new None() : new Some(f((<Some<T>>this).value));
-  }
+  abstract map<U>(f: (value: T) => U): Option<U>;
 
   /**
    * Returns the provided default result (if none),
@@ -149,9 +121,7 @@ export abstract class Option<T> {
    * expect(x.mapOr(42, s => s.length)).toBe(42);
    * ```
    */
-  mapOr<U>(defaultValue: U, f: (value: T) => U): U {
-    return this.isNone() ? defaultValue : f((<Some<T>>this).value);
-  }
+  abstract mapOr<U>(defaultValue: U, f: (value: T) => U): U;
 
   /**
    * Computes a default function result (if none), or
@@ -167,9 +137,7 @@ export abstract class Option<T> {
    * expect(x.mapOrElse(() => 2 * 21, s => s.length)).toBe(42);
    * ```
    */
-  mapOrElse<U>(defaultFunc: () => U, f: (value: T) => U): U {
-    return this.isNone() ? defaultFunc() : f((<Some<T>>this).value);
-  }
+  abstract mapOrElse<U>(defaultFunc: () => U, f: (value: T) => U): U;
 
   /**
    * Returns [[`None`]] if the option is a [[`None`]], otherwise returns `optB`.
@@ -194,9 +162,7 @@ export abstract class Option<T> {
    * expect(x.and(y)).toEqual(new None());
    * ```
    */
-  and<U>(optB: Option<U>): Option<U> {
-    return this.isNone() ? new None() : optB;
-  }
+  abstract and<U>(optB: Option<U>): Option<U>;
 
   /**
    * Returns [[`None`]] if the option is a [[`None`]], otherwise calls `fn` with the
@@ -216,9 +182,7 @@ export abstract class Option<T> {
    * expect(new None().andThen(sq).andThen(sq)).toEqual(new None());
    * ```
    */
-  andThen<U>(fn: (value: T) => Option<U>): Option<U> {
-    return this.isNone() ? new None() : fn((<Some<T>>this).value);
-  }
+  abstract andThen<U>(fn: (value: T) => Option<U>): Option<U>;
 
   /**
    * Returns [[`None`]] if the option is a [[`None`]], otherwise calls `predicate`
@@ -237,11 +201,7 @@ export abstract class Option<T> {
    * expect(new Some(4).filter(isEven)).toEqual(new Some(4));
    * ```
    */
-  filter(predicate: (value: T) => boolean): Option<T> {
-    if (this.isNone()) return new None();
-    if (predicate((<Some<T>>this).value)) return new Some((<Some<T>>this).value);
-    return new None();
-  }
+  abstract filter(predicate: (value: T) => boolean): Option<T>;
 
   /**
    * Returns the option if it contains a value, otherwise returns `optB`.
@@ -270,9 +230,7 @@ export abstract class Option<T> {
    * expect(x.or(y)).toEqual(new None());
    * ```
    */
-  or(optB: Option<T>): Option<T> {
-    return this.isNone() ? optB : new Some((<Some<T>>this).value);
-  }
+  abstract or(optB: Option<T>): Option<T>;
 
   /**
    * Returns the option if it contains a value, otherwise calls `fn` and
@@ -289,9 +247,7 @@ export abstract class Option<T> {
    * expect(new None().orElse(nobody)).toEqual(new None());
    * ```
    */
-  orElse(fn: () => Option<T>): Option<T> {
-    return this.isNone() ? fn() : new Some((<Some<T>>this).value);
-  }
+  abstract orElse(fn: () => Option<T>): Option<T>;
 
   /**
    * Returns [[`Some`]] if exactly one of `this`, `optB` is [[`Some`]], otherwise
@@ -317,11 +273,7 @@ export abstract class Option<T> {
    * expect(x.xor(y)).toEqual(new None());
    * ```
    */
-  xor(optB: Option<T>): Option<T> {
-    if (this.isSome() && optB.isNone()) return new Some(this.value);
-    if (this.isNone() && optB.isSome()) return new Some(optB.value);
-    return new None();
-  }
+  abstract xor(optB: Option<T>): Option<T>;
 
   /**
    * Zips `this` with another `Option`.
@@ -340,20 +292,17 @@ export abstract class Option<T> {
    * expect(x.zip(z)).toEqual(new None());
    * ```
    */
-  zip<U>(other: Option<U>): Option<[T, U]> {
-    if (this.isSome() && other.isSome()) return new Some([this.value, other.value]);
-    return new None();
-  }
+  abstract zip<U>(other: Option<U>): Option<[T, U]>;
 
   /**
    * Zips `this` and another `Option` with function `fn`.
-   * 
+   *
    * If `this` is `Some(s)` and `other` is `Some(o)`, this method returns `Some(fn([s, o]))`.
    * Otherwise, it returns `None`.
-   * 
+   *
    * # Examples
-   * 
-   * ```ts	
+   *
+   * ```ts
    * const x = new Some(17.5);
    * const y = new Some(42.7);
    * const point = (x: number, y: number) => ({ x, y });
@@ -362,26 +311,159 @@ export abstract class Option<T> {
    * expect(x.zipWith(new None(), point)).toEqual(new None());
    * ```
    */
-  zipWith<U, R>(other: Option<U>, fn: (a: T, b: U) => R): Option<R> {
-    if (this.isSome() && other.isSome()) return new Some(fn(this.value, other.value));
-    return new None();
-  }
+  abstract zipWith<U, R>(other: Option<U>, fn: (a: T, b: U) => R): Option<R>;
 }
 
 /**
  * A `Some` is an [[`Option`]] that contains a value.
  */
 export class Some<T> extends Option<T> {
-  constructor(value: T) {
-    super(value);
+  constructor(private value: T) {
+    super();
+  }
+
+  isSome(): this is Some<T> {
+    return true;
+  }
+
+  isNone(): this is None {
+    return false;
+  }
+
+  expect(message: string): T {
+    return this.value;
+  }
+
+  unwrap(): T {
+    return this.value;
+  }
+
+  unwrapOr(defaultValue: T): T {
+    return this.value;
+  }
+
+  unwrapOrElse(fn: () => T): T {
+    return this.value;
+  }
+
+  map<U>(f: (value: T) => U): Option<U> {
+    return new Some(f(this.value));
+  }
+
+  mapOr<U>(defaultValue: U, f: (value: T) => U): U {
+    return f(this.value);
+  }
+
+  mapOrElse<U>(defaultFunc: () => U, f: (value: T) => U): U {
+    return f(this.value);
+  }
+
+  and<U>(optB: Option<U>): Option<U> {
+    return optB;
+  }
+
+  andThen<U>(fn: (value: T) => Option<U>): Option<U> {
+    return fn(this.value);
+  }
+
+  filter(predicate: (value: T) => boolean): Option<T> {
+    if (predicate(this.value)) return new Some(this.value);
+    return new None();
+  }
+
+  or(optB: Option<T>): Option<T> {
+    return new Some(this.value);
+  }
+
+  orElse(fn: () => Option<T>): Option<T> {
+    return new Some(this.value);
+  }
+
+  xor(optB: Option<T>): Option<T> {
+    if (optB.isNone()) return new Some(this.value);
+    return new None();
+  }
+
+  zip<U>(other: Option<U>): Option<[T, U]> {
+    if (other.isSome()) return new Some([this.value, other.value]);
+    return new None();
+  }
+
+  zipWith<U, R>(other: Option<U>, fn: (a: T, b: U) => R): Option<R> {
+    if (other.isSome()) return new Some(fn(this.value, other.value));
+    return new None();
   }
 }
 
 /**
  * A `None` is an [[`Option`]] that does not contain a value.
  */
-export class None extends Option<any> {
-  constructor() {
-    super(null);
+export class None extends Option<never> {
+  isSome(): this is Some<never> {
+    return false;
+  }
+
+  isNone(): this is None {
+    return true;
+  }
+  expect(message: string): never {
+    throw new Error(message);
+  }
+
+  unwrap(): never {
+    throw new Error(`called \`Option.unwrap()\` on a \`None\` value`);
+  }
+
+  unwrapOr<T>(defaultValue: T): T {
+    return defaultValue;
+  }
+
+  unwrapOrElse<T>(fn: () => T): T {
+    return fn();
+  }
+
+  map<T, U>(f: (value: T) => U): Option<U> {
+    return new None();
+  }
+
+  mapOr<T, U>(defaultValue: U, f: (value: T) => U): U {
+    return defaultValue;
+  }
+
+  mapOrElse<T, U>(defaultFunc: () => U, f: (value: T) => U): U {
+    return defaultFunc();
+  }
+
+  and<U>(optB: Option<U>): Option<U> {
+    return new None();
+  }
+
+  andThen<T, U>(fn: (value: T) => Option<U>): Option<U> {
+    return new None();
+  }
+
+  filter<T>(predicate: (value: T) => boolean): Option<T> {
+    return new None();
+  }
+
+  or<T>(optB: Option<T>): Option<T> {
+    return optB;
+  }
+
+  orElse<T>(fn: () => Option<T>): Option<T> {
+    return fn();
+  }
+
+  xor<T>(optB: Option<T>): Option<T> {
+    if (optB.isSome()) return new Some(optB.unwrap());
+    return new None();
+  }
+
+  zip<T, U>(other: Option<U>): Option<[T, U]> {
+    return new None();
+  }
+
+  zipWith<T, U, R>(other: Option<U>, fn: (a: T, b: U) => R): Option<R> {
+    return new None();
   }
 }

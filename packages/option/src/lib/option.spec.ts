@@ -58,14 +58,14 @@ describe('Option<T>', () => {
   it.each([
     [new Some('foo'), 3],
     [new None(), 42],
-  ])('mapOr()', (sut, result) => {
+  ])('mapOr()', (sut: Option<string>, result) => {
     expect(sut.mapOr(42, (str) => str.length)).toBe(result);
   });
 
   it.each([
     [new Some('foo'), 3],
     [new None(), 42],
-  ])('mapOrElse()', (sut, result) => {
+  ])('mapOrElse()', (sut: Option<string>, result) => {
     expect(
       sut.mapOrElse(
         () => 2 * 21,
@@ -90,7 +90,7 @@ describe('Option<T>', () => {
     [new Some(2), sq, nope, new None()],
     [new Some(2), nope, sq, new None()],
     [new None(), sq, sq, new None()],
-  ])('andThen()', (sut, f1, f2, result) => {
+  ])('andThen()', (sut: Option<number>, f1, f2, result) => {
     expect(sut.andThen(f1).andThen(f2)).toEqual(result);
   });
 
