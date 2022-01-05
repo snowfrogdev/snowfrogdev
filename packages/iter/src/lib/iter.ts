@@ -15,6 +15,14 @@ export class Iter<T> implements Iterable<T> {
     return done ? new None() : new Some(value);
   }
 
+  count(): number { 
+    let count = 0;
+    for (const _ of this) {
+      count++;
+    }
+    return count;
+  }
+
   toArray(): T[] {
     return [...this];
   }

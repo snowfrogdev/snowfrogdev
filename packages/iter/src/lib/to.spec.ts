@@ -54,8 +54,8 @@ describe('Iter', () => {
 
     const expected = new Map();
     expected.set(1, 'one');
-    expected.set(2, 'one');
-    expected.set(3, 'one');
+    expected.set(2, 'two');
+    expected.set(3, 'three');
 
     const map = new Map(iter);
 
