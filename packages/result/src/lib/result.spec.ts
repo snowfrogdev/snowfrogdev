@@ -1,4 +1,4 @@
-import { Err, Ok } from './result';
+import { Err, Ok, Result } from './internal';
 
 describe('Result<T, E>', () => {
   it.each([
@@ -18,7 +18,7 @@ describe('Result<T, E>', () => {
   it.each([
     [new Ok('foo'), 3],
     [new Err('bar'), 42],
-  ])('mapOr()', (sut, result) => {
+  ])('mapOr()', (sut: Result<string, string>, result) => {
     expect(sut.mapOr(42, (str: string) => str.length)).toBe(result);
   });
 
@@ -49,18 +49,19 @@ describe('Result<T, E>', () => {
     [new Err('early error'), new Ok('foo'), new Err('early error')],
     [new Err('not a 2'), new Err('late error'), new Err('not a 2')],
     [new Ok(2), new Ok('different result type'), new Ok('different result type')],
-  ])('and()', (sut, other, result) => {
+  ])('and()', (sut: Result<number | string, string>, other, result) => {
     expect(sut.and(other)).toEqual(result);
   });
 
-  const sq = (x: number) => new Ok(x * x);
-  const err = (x: number) => new Err(x);
+  type TestFunc = (x: number) => Result<number, number>;
+  const sq: TestFunc = (x: number) => new Ok(x * x);
+  const err: TestFunc = (x: number) => new Err(x);
   it.each([
     [new Ok(2), sq, sq, new Ok(16)],
     [new Ok(2), sq, err, new Err(4)],
     [new Ok(2), err, sq, new Err(2)],
     [new Err(3), sq, sq, new Err(3)],
-  ])('andThen()', (sut, f1, f2, result) => {
+  ])('andThen()', (sut: Result<number, number>, f1, f2, result) => {
     expect(sut.andThen(f1).andThen(f2)).toEqual(result);
   });
 
@@ -69,7 +70,7 @@ describe('Result<T, E>', () => {
     [new Err('early error'), new Ok(2), new Ok(2)],
     [new Err('not a 2'), new Err('late error'), new Err('late error')],
     [new Ok(2), new Ok(100), new Ok(2)],
-  ])('or()', (sut, other, result) => {
+  ])('or()', (sut: Result<number | string, number | string>, other, result) => {
     expect(sut.or(other)).toEqual(result);
   });
 
@@ -92,7 +93,7 @@ describe('Result<T, E>', () => {
   it.each([
     [new Ok(2), 2],
     [new Err('foo'), 3],
-  ])('unwrapOrElse()', (sut, result) => {
+  ])('unwrapOrElse()', (sut: Result<number, string>, result) => {
     const count = (x: string) => x.length;
     expect(sut.unwrapOrElse(count)).toBe(result);
   });
