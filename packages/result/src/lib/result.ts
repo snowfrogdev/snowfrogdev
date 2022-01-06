@@ -1,3 +1,5 @@
+import { Err, Ok } from './internal';
+
 /**
  * Result is an abstract class that represents either success [[Ok]] or failure [[Err]].
  * See the [module documentation](https://snowfrogdev.github.io/snowfrogdev/result/) for details.
@@ -7,30 +9,14 @@
  */
 export abstract class Result<T, E> {
   /**
-   * @ignore
-   */
-  protected value: T | E;
-
-  /**
-   * @ignore
-   */
-  constructor(value: T | E) {
-    this.value = value;
-  }
-
-  /**
    * Returns `true` if the result is [[Ok]], `false` otherwise.
    */
-  isOk(): this is Ok<T> {
-    return this instanceof Ok;
-  }
+  abstract isOk(): this is Ok<T>;
 
   /**
    * Returns `true` if the result is [[Err]], `false` otherwise.
    */
-  isErr(): this is Err<E> {
-    return !this.isOk();
-  }
+  abstract isErr(): this is Err<E>;
 
   /**
    * Maps a `Result<T, E>` to a `Result<U, E>` by applying a function to a
@@ -55,9 +41,7 @@ export abstract class Result<T, E> {
    * }
    * ```
    */
-  map<U>(f: (value: T) => U): Result<U, E> {
-    return this.isOk() ? new Ok(f(this.value as T)) : new Err((<Err<E>>this).value as E);
-  }
+  abstract map<U>(f: (value: T) => U): Result<U, E>;
 
   /**
    * Returns the provided default value if the result is [[Err]], otherwise
@@ -77,9 +61,7 @@ export abstract class Result<T, E> {
    * expect(y.mapOr(42, str => str.length)).toBe(42);
    * ```
    */
-  mapOr<U>(defaultValue: U, f: (value: T) => U): U {
-    return this.isOk() ? f(this.value as T) : defaultValue;
-  }
+  abstract mapOr<U>(defaultValue: U, f: (value: T) => U): U;
 
   /**
    * Maps a `Result<T, E>` to `U` by applying fallback function `defaultFunc` to
@@ -102,9 +84,7 @@ export abstract class Result<T, E> {
    * expect(y.mapOrElse(e => k * 2, str => str.length)).toBe(42);
    * ```
    */
-  mapOrElse<U>(defaultFunc: (e: E) => U, f: (value: T) => U): U {
-    return this.isOk() ? f(this.value as T) : defaultFunc((<Err<E>>this).value as E);
-  }
+  abstract mapOrElse<U>(defaultFunc: (e: E) => U, f: (value: T) => U): U;
 
   /**
    * Maps a `Result<T, E>` to a `Result<T, F>` by applying a function to a
@@ -127,9 +107,7 @@ export abstract class Result<T, E> {
    * expect(y.mapErr(stringify)).toEqual(new Err("error code: 13"));
    * ```
    */
-  mapErr<F>(f: (e: E) => F): Result<T, F> {
-    return this.isOk() ? new Ok(this.value as T) : new Err(f((<Err<E>>this).value as E));
-  }
+  abstract mapErr<F>(f: (e: E) => F): Result<T, F>;
 
   /**
    * Returns `res` if the result is [[Ok]], otherwise returns the [[Err]] value of `this`.
@@ -156,9 +134,7 @@ export abstract class Result<T, E> {
    * expect(x.and(y)).toEqual(new Ok("different result type"));
    * ```
    */
-  and<U>(res: Result<U, E>): Result<U, E> {
-    return this.isOk() ? res : new Err((<Err<E>>this).value as E);
-  }
+  abstract and<U>(res: Result<U, E>): Result<U, E>;
 
   /**
    * Calls `f` if the result is [[Ok]], otherwise returns the [[Err]] value of `this`.
@@ -179,9 +155,7 @@ export abstract class Result<T, E> {
    * expect(new Err(3).andThen(sq).andThen(sq)).toEqual(new Err(3));
    * ```
    */
-  andThen<U>(f: (value: T) => Result<U, E>): Result<U, E> {
-    return this.isOk() ? f(this.value as T) : new Err((<Err<E>>this).value as E);
-  }
+  abstract andThen<U>(f: (value: T) => Result<U, E>): Result<U, E>;
 
   /**
    * Returns `res` if the result is [[Err]], otherwise returns the [[Ok]] value of `this`.
@@ -212,9 +186,7 @@ export abstract class Result<T, E> {
    * expect(x.or(y)).toEqual(new Ok(2));
    * ```
    */
-  or<F>(res: Result<T, F>): Result<T, F> {
-    return this.isOk() ? new Ok(this.value as T) : res;
-  }
+  abstract or<F>(res: Result<T, F>): Result<T, F>;
 
   /**
    * Calls `f` if the result is [[Err]], otherwise returns the [[Ok]] value of `this`.
@@ -235,9 +207,7 @@ export abstract class Result<T, E> {
    * expect(new Err(3).orElse(err).orElse(err)).toEqual(new Err(3));
    * ```
    */
-  orElse<F>(f: (err: E) => Result<T, F>): Result<T, F> {
-    return this.isOk() ? new Ok(this.value as T) : f((<Err<E>>this).value as E);
-  }
+  abstract orElse<F>(f: (err: E) => Result<T, F>): Result<T, F>;
 
   /**
    * Return the contained [[Ok]] value or a provided default.
@@ -259,9 +229,7 @@ export abstract class Result<T, E> {
    * expect(x.unwrapOr(defaultValue)).toBe(defaultValue);
    * ```
    */
-  unwrapOr(defaultValue: T): T {
-    return this.isOk() ? (this.value as T) : defaultValue;
-  }
+  abstract unwrapOr(defaultValue: T): T;
 
   /**
    * Returns the contained [[Ok]] value or computes it from a provided function.
@@ -277,9 +245,7 @@ export abstract class Result<T, E> {
    * expect(new Err("foo").unwrapOrElse(count)).toBe(3);
    * ```
    */
-  unwrapOrElse(f: (err: E) => T): T {
-    return this.isOk() ? (this.value as T) : f((<Err<E>>this).value as E);
-  }
+  abstract unwrapOrElse(f: (err: E) => T): T;
 
   /**
    * Returns the contained [[Ok]] value.
@@ -297,10 +263,7 @@ export abstract class Result<T, E> {
    * const x = new Err("emergency failure");
    * x.expect("Testing expect"); // throws an error with `Testing expect: emergency failure`
    */
-  expect(message: string): T {
-    if (this.isErr()) throw new Error(`${message}: ${this.value as E}`);
-    return (<Ok<T>>this).value as T;
-  }
+  abstract expect(message: string): T;
 
   /**
    * Returns the contained [[Ok]] value.
@@ -326,10 +289,7 @@ export abstract class Result<T, E> {
    * x.unwrap(); // throws an Error with `emergency failure`
    * ```
    */
-  unwrap(): T {
-    if (this.isErr()) throw new Error(`called \`Result.unwrap()\` on an \`Err\` value: "${this.value as E}"`);
-    return (<Ok<T>>this).value as T;
-  }
+  abstract unwrap(): T;
 
   /**
    * Return the contained [[Err]] value.
@@ -348,10 +308,7 @@ export abstract class Result<T, E> {
    * x.expectErr("Testing expectErr"); // throws an error with `Testing expectErr: 10`
    * ```
    */
-  expectErr(message: string): E {
-    if (this.isOk()) throw new Error(`${message}: ${this.value as T}`);
-    return (<Err<E>>this).value as E;
-  }
+  abstract expectErr(message: string): E;
 
   /**
    * Return the contained [[Err]] value.
@@ -371,26 +328,5 @@ export abstract class Result<T, E> {
    * expect(x.unwrapErr()).toBe("emergency failure");
    * ```
    */
-  unwrapErr(): E {
-    if (this.isOk()) throw new Error(`called \`Result.unwrapErr()\` on an \`Ok\` value: ${this.value as T}`);
-    return (<Err<E>>this).value as E;
-  }
-}
-
-/**
- * A type alias for a successful [[Result]].
- */
-export class Ok<T> extends Result<T, any> {
-  constructor(value: T) {
-    super(value);
-  }
-}
-
-/**
- * A type alias for a failed [[Result]].
- */
-export class Err<E> extends Result<any, E> {
-  constructor(value: E) {
-    super(value);
-  }
+  abstract unwrapErr(): E;
 }
