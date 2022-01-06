@@ -1,4 +1,4 @@
-import { None, Option, Some } from './option';
+import { None, Option, Some } from './internal';
 
 describe('Option<T>', () => {
   it.each([
