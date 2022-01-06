@@ -1,5 +1,4 @@
-import { Option, Some } from "./internal";
-
+import { Option, Some } from './internal';
 
 /**
  * A `None` is an [[`Option`]] that does not contain a value.
