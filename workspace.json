@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "ngx-unleash-proxy-client": "packages/ngx-unleash-proxy-client",
     "option": "packages/option",
     "result": "packages/result"
   }
