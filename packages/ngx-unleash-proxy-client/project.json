@@ -2,7 +2,7 @@
   "projectType": "library",
   "root": "packages/ngx-unleash-proxy-client",
   "sourceRoot": "packages/ngx-unleash-proxy-client/src",
-  "prefix": "snowfrog",
+  "prefix": "ngx-unleash",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
@@ -35,6 +35,22 @@
           "packages/ngx-unleash-proxy-client/src/**/*.ts",
           "packages/ngx-unleash-proxy-client/src/**/*.html"
         ]
+      }
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npm publish --tag=latest --access public",
+        "cwd": "dist/packages/ngx-unleash-proxy-client"
+      }
+    },
+    "docs": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "command": "npx typedoc --options packages/ngx-unleash-proxy-client/typedoc.json",
+        "outputPath": "docs/ngx-unleash-proxy-client"
       }
     }
   },
