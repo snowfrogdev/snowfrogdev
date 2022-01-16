@@ -5,7 +5,6 @@ import { UnleashService } from '@snowfrog/ngx-unleash-proxy-client';
   selector: 'snowfrog-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   constructor(private unleash: UnleashService) {}

@@ -1,9 +1,8 @@
-import { ApplicationRef, Inject, Injectable, InjectionToken, Injector } from '@angular/core';
+import { ApplicationRef, Inject, Injectable, Injector } from '@angular/core';
 import { fromEvent, Observable, take, tap } from 'rxjs';
 
 import { IConfig, UnleashClient } from 'unleash-proxy-client';
-
-export const UnleashConfig = new InjectionToken<IConfig>('unleashConfig');
+import { UnleashConfig } from './unleash-config';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +20,11 @@ export class UnleashService {
       tap(() => this.unleash.start())
     );
     this.onError = fromEvent(this.unleash, 'error');
-    this.onUpdate = fromEvent(this.unleash, 'update').pipe(tap(() => {
-      this.injector.get(ApplicationRef).tick()
-    }));
+    this.onUpdate = fromEvent(this.unleash, 'update').pipe(
+      tap(() => {
+        this.injector.get(ApplicationRef).tick();
+      })
+    );
   }
 
   public isEnabled(featureName: string): boolean {

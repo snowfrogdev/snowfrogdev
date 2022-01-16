@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
-import { NgxUnleashProxyClientModule } from '@snowfrog/ngx-unleash-proxy-client';
+import { NgxUnleashDirectiveModule, NgxUnleashProxyClientModule } from '@snowfrog/ngx-unleash-proxy-client';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,7 +14,9 @@ import { NgxUnleashProxyClientModule } from '@snowfrog/ngx-unleash-proxy-client'
       url: 'https://unleash-dev-proxy.innago.com/proxy',
       clientKey: 'VjY7B3#oG@AvIR^',
       appName: 'ngx-unleash-proxy-client-app',
+      refreshInterval: 5
     }),
+    NgxUnleashDirectiveModule
   ],
   providers: [],
   bootstrap: [AppComponent],
