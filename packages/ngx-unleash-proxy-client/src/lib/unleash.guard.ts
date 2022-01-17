@@ -1,6 +1,5 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { UnleashService } from './unleash.service';
 
 @Injectable({
@@ -12,6 +11,8 @@ export class UnleashGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const toggleName: string | undefined = route.data['toggleName'];
     const redirectUrl: string | undefined = route.data['redirectUrl'];
+    const is: boolean = route.data['is'] ??= true;
+    
     if (!toggleName) {
       const errorMessage = `UnleashGuard was used on route '${route.url}' without a 'toggleName'. You must add a 'data.toggleName' property to the Route.`;
       if (isDevMode()) throw new Error(errorMessage);
@@ -19,12 +20,11 @@ export class UnleashGuard implements CanActivate {
       return false;
     }
 
-    if (this.unleash.isEnabled(toggleName)) {
+    if (this.unleash.isEnabled(toggleName) === is) {
       return true;
     }
 
     if (redirectUrl) this.router.navigateByUrl(redirectUrl);
-
     return false;
   }
 }

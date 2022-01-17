@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { UnleashService } from '@snowfrog/ngx-unleash-proxy-client';
 
 @Component({
@@ -10,7 +10,8 @@ export class AppComponent {
   constructor(private unleash: UnleashService) {}
   get title(): string {
     if(this.unleash.isEnabled('testing-toggles')) {
-      return 'The toggle is on';
+      const variant = this.unleash.getVariant('testing-toggles');
+      return `The toggle is on and the variant is ${variant.name}`;
     }
     return 'The toggle is off';
   }

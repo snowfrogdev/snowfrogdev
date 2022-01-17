@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
-import { NgxUnleashDirectiveModule, NgxUnleashProxyClientModule, UnleashGuard } from '@snowfrog/ngx-unleash-proxy-client';
+import { NgxUnleashProxyClientModule, UnleashGuard } from '@snowfrog/ngx-unleash-proxy-client';
 import { ProtectedComponent } from './protected/protected.component';
 
 @NgModule({
@@ -24,7 +24,6 @@ import { ProtectedComponent } from './protected/protected.component';
       appName: 'ngx-unleash-proxy-client-app',
       refreshInterval: 5,
     }),
-    NgxUnleashDirectiveModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
