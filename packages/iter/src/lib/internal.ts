@@ -4,3 +4,4 @@ export * from './to';
 export * from './filter';
 export * from './map';
 export * from './skip';
+export * from './chain';
