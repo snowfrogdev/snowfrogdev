@@ -9,7 +9,8 @@
     "try",
     "catch",
     "finally",
-    "throw"
+    "throw",
+    "rust"
   ],
   "homepage": "https://snowfrogdev.github.io/snowfrogdev/result/",
   "bugs": "https://github.com/snowfrogdev/snowfrogdev/issues",

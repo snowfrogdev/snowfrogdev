@@ -3,3 +3,4 @@ export * from './iter';
 export * from './to';
 export * from './filter';
 export * from './map';
+export * from './skip';

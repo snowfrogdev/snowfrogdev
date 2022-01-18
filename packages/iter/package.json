@@ -1,4 +1,22 @@
 {
   "name": "@snowfrog/iter",
-  "version": "0.0.1"
+  "version": "1.0.0",
+  "description": "Iterate over things like you mean it.",
+  "keywords": [
+    "iterator",
+    "iterate",
+    "iteration",
+    "iteratee",
+    "iterable",
+    "lazy",
+    "rust"
+  ],
+  "homepage": "https://snowfrogdev.github.io/snowfrogdev/iter/",
+  "bugs": "https://github.com/snowfrogdev/snowfrogdev/issues",
+  "license": "MIT",
+  "author": "Philippe Vaillancourt <phil@snowfrog.dev> (http://snowfrog.dev)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowfrogdev/snowfrogdev.git"
+  }
 }

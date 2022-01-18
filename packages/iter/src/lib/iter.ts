@@ -1,5 +1,6 @@
 import { None, Option, Some } from '@snowfrog/option';
-import { FilterIter, MapIter, ToIter } from './internal';
+import { Err, Ok, Result } from '@snowfrog/result';
+import { FilterIter, MapIter, ToIter, SkipIter } from './internal';
 
 export abstract class Iter<T> implements Iterable<T> {
   abstract next(): Option<T>;
@@ -32,6 +33,23 @@ export abstract class Iter<T> implements Iterable<T> {
 
   filter<P extends (item: T) => boolean>(predicate: P): FilterIter<this, T> {
     return new FilterIter(this, predicate);
+  }
+
+  skip(n: number): SkipIter<this, T> {
+    return new SkipIter(this, n);
+  }
+
+  nth(n: number): Option<T> {
+    if (this.advanceBy(n).isErr()) return new None();
+    return this.next();
+  }
+
+  advanceBy(n: number): Result<never[], number> {
+    for (let i = 0; i < n; i++) {
+      if (this.next().isNone()) return new Err(i);
+    }
+
+    return new Ok([]);
   }
 
   toArray(): T[] {

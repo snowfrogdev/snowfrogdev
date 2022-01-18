@@ -5,7 +5,8 @@
   "keywords": [
     "option",
     "optional",
-    "type-safe"
+    "type-safe",
+    "rust"
   ],
   "homepage": "https://snowfrogdev.github.io/snowfrogdev/option/",
   "bugs": "https://github.com/snowfrogdev/snowfrogdev/issues",
