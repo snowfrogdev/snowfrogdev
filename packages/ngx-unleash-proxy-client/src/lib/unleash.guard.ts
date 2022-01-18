@@ -11,7 +11,7 @@ export class UnleashGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const toggleName: string | undefined = route.data['toggleName'];
     const redirectUrl: string | undefined = route.data['redirectUrl'];
-    const shouldBe: boolean = route.data['shoulBe'] ??= true;
+    const shouldBe: boolean = route.data['shoulBe'] ?? true;
     
     if (!toggleName) {
       const errorMessage = `UnleashGuard was used on route '${route.url}' without a 'toggleName'. You must add a 'data.toggleName' property to the Route.`;

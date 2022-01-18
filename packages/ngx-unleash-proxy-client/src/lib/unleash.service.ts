@@ -22,7 +22,6 @@ export class UnleashService {
     this.onError = fromEvent<Error>(this.unleash, 'error').pipe(share());
     this.onUpdate = fromEvent(this.unleash, 'update').pipe(share());
     this.onUpdate.subscribe(() => {
-      console.log('update');
       this.injector.get(ApplicationRef).tick();
     });
   }

@@ -1,11 +1,12 @@
-import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { UnleashService } from '..';
 
 @Directive({
   selector: '[unleash]',
 })
-export class UnleashDirective {
+export class UnleashDirective implements OnInit {
   private hasView = false;
+  private toggleName = '';
   @Input() set unleash(toggleName: string) {
     if (this.unleashService.isEnabled(toggleName)) {
       if (!this.hasView) {
@@ -16,16 +17,28 @@ export class UnleashDirective {
       this.viewContainer.clear();
       this.hasView = false;
     }
+    this.toggleName = toggleName;
   }
 
-  constructor(private templateRef: TemplateRef<unknown>, private viewContainer: ViewContainerRef, private unleashService: UnleashService) {}
+  constructor(
+    private templateRef: TemplateRef<unknown>,
+    private viewContainer: ViewContainerRef,
+    private unleashService: UnleashService
+  ) {}
+
+  ngOnInit() {
+    this.unleashService.onUpdate.subscribe(() => {
+      this.unleash = this.toggleName;
+    });
+  }
 }
 
 @Directive({
   selector: '[unleashNot]',
 })
-export class UnleashNotDirective {
+export class UnleashNotDirective implements OnInit {
   private hasView = false;
+  private toggleName = '';
   @Input() set unleashNot(toggleName: string) {
     if (!this.unleashService.isEnabled(toggleName)) {
       if (!this.hasView) {
@@ -36,6 +49,8 @@ export class UnleashNotDirective {
       this.viewContainer.clear();
       this.hasView = false;
     }
+
+    this.toggleName = toggleName;
   }
 
   constructor(
@@ -43,4 +58,10 @@ export class UnleashNotDirective {
     private viewContainer: ViewContainerRef,
     private unleashService: UnleashService
   ) {}
+
+  ngOnInit() {
+    this.unleashService.onUpdate.subscribe(() => {
+      this.unleashNot = this.toggleName;
+    });
+  }
 }
