@@ -53,7 +53,7 @@ import { UnleashService } from '@snowfrog/ngx-unleash-proxy-client';
 export class TestComponent {
   constructor(private unleash: UnleashService) {}
   get title(): string {
-    if(this.unleash.isEnabled('test.toggle')) {
+    if (this.unleash.isEnabled('test.toggle')) {
       return 'The toggle is on';
     }
     return 'The toggle is off';
@@ -79,9 +79,9 @@ const routes = [
     path: 'test',
     component: TestComponent,
     canActivate: [UnleashGuard],
-    data: { toggleName: 'test.toggle', is: true, redirectUrl: '/' }  
+    data: { toggleName: 'test.toggle', shouldBe: true, redirectUrl: '/' },
   },
-]
+];
 ```
 
 To check variants:
@@ -114,7 +114,7 @@ import { UnleashService } from '@snowfrog/ngx-unleash-proxy-client';
 @Injectable()
 export class SomeService {
   constructor(private unleash: UnleashService) {}
-  
+
   someOperation() {
     this.unleash.updateContext({
       userId: '123',

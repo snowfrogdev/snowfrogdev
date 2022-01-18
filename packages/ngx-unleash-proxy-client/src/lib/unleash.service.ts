@@ -1,5 +1,5 @@
 import { ApplicationRef, Inject, Injectable, Injector } from '@angular/core';
-import { fromEvent, Observable, take, tap } from 'rxjs';
+import { fromEvent, Observable, share, take, tap } from 'rxjs';
 
 import { IConfig, IContext as UnleashContext, IVariant as UnleashVariant, UnleashClient } from 'unleash-proxy-client';
 import { UnleashConfig } from './unleash-config';
@@ -19,12 +19,12 @@ export class UnleashService {
       take(1),
       tap(() => this.unleash.start())
     );
-    this.onError = fromEvent(this.unleash, 'error');
-    this.onUpdate = fromEvent(this.unleash, 'update').pipe(
-      tap(() => {
-        this.injector.get(ApplicationRef).tick();
-      })
-    );
+    this.onError = fromEvent<Error>(this.unleash, 'error').pipe(share());
+    this.onUpdate = fromEvent(this.unleash, 'update').pipe(share());
+    this.onUpdate.subscribe(() => {
+      console.log('update');
+      this.injector.get(ApplicationRef).tick();
+    });
   }
 
   public isEnabled(toggleName: string): boolean {
