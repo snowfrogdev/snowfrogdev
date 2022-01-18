@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { UnleashService } from './unleash.service';
 import { IConfig } from 'unleash-proxy-client';
 import { UnleashConfig } from './unleash-config';
-import { NgxUnleashDirectiveModule } from './unleash.module';
+import { UnleashDirective, UnleashNotDirective } from './unleash.directive';
 
 @NgModule({
-  imports: [CommonModule, NgxUnleashDirectiveModule],
-  exports: [NgxUnleashDirectiveModule],
+  imports: [CommonModule],
+  declarations: [UnleashDirective, UnleashNotDirective],
+  exports: [UnleashDirective, UnleashNotDirective],
 })
 export class NgxUnleashProxyClientModule {
   static init(config: IConfig): ModuleWithProviders<NgxUnleashProxyClientModule> {
