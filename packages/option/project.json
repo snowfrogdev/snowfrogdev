@@ -5,35 +5,25 @@
   "targets": {
     "build": {
       "executor": "@nrwl/node:package",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/option",
         "main": "packages/option/src/index.ts",
         "tsConfig": "packages/option/tsconfig.lib.json",
-        "assets": [
-          "packages/option/*.md"
-        ],
+        "assets": ["packages/option/*.md"],
         "packageJson": "packages/option/package.json"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "packages/option/**/*.ts"
-        ]
+        "lintFilePatterns": ["packages/option/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/packages/option"
-      ],
+      "outputs": ["coverage/packages/option"],
       "options": {
         "jestConfig": "packages/option/jest.config.js",
         "passWithNoTests": true
@@ -49,9 +39,7 @@
     },
     "docs": {
       "executor": "@nrwl/workspace:run-commands",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "command": "npx typedoc --options packages/option/typedoc.json",
         "outputPath": "docs/option"

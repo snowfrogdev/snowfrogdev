@@ -1,5 +1,5 @@
 {
   "entryPoints": ["src/index.ts"],
-  "out": "../../docs/option",
+  "out": "../../docs/ngx-unleash-proxy-client",
   "tsconfig": "tsconfig.lib.json"
 }

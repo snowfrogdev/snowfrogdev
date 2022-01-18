@@ -1,0 +1,58 @@
+{
+  "projectType": "library",
+  "root": "packages/ngx-unleash-proxy-client",
+  "sourceRoot": "packages/ngx-unleash-proxy-client/src",
+  "prefix": "ngx-unleash",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["dist/packages/ngx-unleash-proxy-client"],
+      "options": {
+        "project": "packages/ngx-unleash-proxy-client/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/ngx-unleash-proxy-client/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/ngx-unleash-proxy-client/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/ngx-unleash-proxy-client"],
+      "options": {
+        "jestConfig": "packages/ngx-unleash-proxy-client/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "packages/ngx-unleash-proxy-client/src/**/*.ts",
+          "packages/ngx-unleash-proxy-client/src/**/*.html"
+        ]
+      }
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "npm publish --tag=latest --access public",
+        "cwd": "dist/packages/ngx-unleash-proxy-client"
+      }
+    },
+    "docs": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "command": "npx typedoc --options packages/ngx-unleash-proxy-client/typedoc.json",
+        "outputPath": "docs/ngx-unleash-proxy-client"
+      }
+    }
+  },
+  "tags": []
+}

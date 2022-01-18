@@ -2,6 +2,8 @@
   "version": 2,
   "projects": {
     "iter": "packages/iter",
+    "ngx-unleash-proxy-client": "packages/ngx-unleash-proxy-client",
+    "ngx-unleash-proxy-client-app": "packages/ngx-unleash-proxy-client-app",
     "option": "packages/option",
     "result": "packages/result"
   }
