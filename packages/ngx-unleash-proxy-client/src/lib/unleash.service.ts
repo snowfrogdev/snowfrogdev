@@ -1,8 +1,9 @@
 import { ApplicationRef, Inject, Injectable, Injector } from '@angular/core';
 import { fromEvent, Observable, share, take, tap } from 'rxjs';
+import { UnleashClient } from 'unleash-proxy-client';
+import { UnleashVariant, UnleashContext, UnleashConfig } from './internal';
+import { UnleashConfigToken } from './unleash-config';
 
-import { IConfig, IContext as UnleashContext, IVariant as UnleashVariant, UnleashClient } from 'unleash-proxy-client';
-import { UnleashConfig } from './unleash-config';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class UnleashService {
   public onUpdate: Observable<unknown>;
   public onError: Observable<Error>;
 
-  constructor(@Inject(UnleashConfig) config: IConfig, @Inject(Injector) private injector: Injector) {
+  constructor(@Inject(UnleashConfigToken) config: UnleashConfig, @Inject(Injector) private injector: Injector) {
     this.unleash = new UnleashClient(config);
     this.onInitialized = fromEvent(this.unleash, 'initialized').pipe(
       take(1),

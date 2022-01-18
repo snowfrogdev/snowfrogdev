@@ -1,4 +1,4 @@
 import { InjectionToken } from "@angular/core";
-import { IConfig } from "unleash-proxy-client";
+import { UnleashConfig } from "./internal";
 
-export const UnleashConfig = new InjectionToken<IConfig>('unleashConfig');
+export const UnleashConfigToken = new InjectionToken<UnleashConfig>('unleashConfig');

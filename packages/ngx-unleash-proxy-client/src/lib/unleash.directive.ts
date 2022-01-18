@@ -1,5 +1,5 @@
 import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { UnleashService } from '..';
+import { UnleashService } from './unleash.service';
 
 @Directive({
   selector: '[unleash]',

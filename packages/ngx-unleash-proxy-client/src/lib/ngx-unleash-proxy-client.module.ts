@@ -1,9 +1,9 @@
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UnleashService } from './unleash.service';
-import { IConfig } from 'unleash-proxy-client';
-import { UnleashConfig } from './unleash-config';
+import { UnleashConfig } from './internal';
 import { UnleashDirective, UnleashNotDirective } from './unleash.directive';
+import { UnleashConfigToken } from './unleash-config';
+import { UnleashService } from './unleash.service';
 
 @NgModule({
   imports: [CommonModule],
@@ -11,11 +11,11 @@ import { UnleashDirective, UnleashNotDirective } from './unleash.directive';
   exports: [UnleashDirective, UnleashNotDirective],
 })
 export class NgxUnleashProxyClientModule {
-  static init(config: IConfig): ModuleWithProviders<NgxUnleashProxyClientModule> {
+  static init(config: UnleashConfig): ModuleWithProviders<NgxUnleashProxyClientModule> {
     return {
       ngModule: NgxUnleashProxyClientModule,
       providers: [
-        { provide: UnleashConfig, useValue: config },
+        { provide: UnleashConfigToken, useValue: config },
         {
           provide: APP_INITIALIZER,
           useFactory: (unleashService: UnleashService) => () => unleashService.onInitialized,
