@@ -1,6 +1,22 @@
 {
   "name": "@snowfrog/ngx-unleash-proxy-client",
   "version": "1.0.0",
+  "description": "Unleash Proxy Client SDK for Angular",
+  "keywords": [
+    "unleash",
+    "proxy",
+    "client",
+    "sdk",
+    "angular"
+  ],
+  "homepage": "https://snowfrogdev.github.io/snowfrogdev/ngx-unleash-proxy-client/",
+  "bugs": "https://github.com/snowfrogdev/snowfrogdev/issues",
+  "license": "MIT",
+  "author": "Philippe Vaillancourt <phil@snowfrog.dev> (http://snowfrog.dev)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowfrogdev/snowfrogdev.git"
+  },
   "peerDependencies": {
     "@angular/common": "^13.1.0",
     "@angular/core": "^13.1.0"
