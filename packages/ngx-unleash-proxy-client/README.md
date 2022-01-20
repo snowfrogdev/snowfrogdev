@@ -11,7 +11,7 @@ Before you can use this Unleash SDK you need to set up a Unleash Proxy instance.
 ### Step 2: Install
 
 ```bash
-npm install ngx-unleash-proxy-client
+npm install @snowfrog/ngx-unleash-proxy-client
 ```
 
 ### Step 3: Initialize the SDK
