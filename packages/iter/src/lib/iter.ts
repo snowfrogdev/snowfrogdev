@@ -1,6 +1,6 @@
 import { None, Option, Some } from '@snowfrog/option';
 import { Err, Ok, Result } from '@snowfrog/result';
-import { FilterIter, MapIter, ToIter, SkipIter, ChainIter } from './internal';
+import { FilterIter, MapIter, ToIter, SkipIter, ChainIter, EnumerateIter } from './internal';
 
 export abstract class Iter<T> implements Iterable<T> {
   abstract next(): Option<T>;
@@ -54,6 +54,10 @@ export abstract class Iter<T> implements Iterable<T> {
 
   chain(other: Iter<T>): ChainIter<this, Iter<T>, T> {
     return new ChainIter(this, other);
+  }
+
+  enumerate(): EnumerateIter<this, T> {
+    return new EnumerateIter(this);
   }
 
   toArray(): T[] {

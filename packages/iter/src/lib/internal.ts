@@ -5,3 +5,4 @@ export * from './filter';
 export * from './map';
 export * from './skip';
 export * from './chain';
+export * from './enumerate';
