@@ -60,6 +60,18 @@ export abstract class Iter<T> implements Iterable<T> {
     return new EnumerateIter(this);
   }
 
+  all(f: (x: T) => boolean): boolean {
+    const check = (x: Option<T>): boolean => {
+      if (x.isNone()) return true;
+      if (!f(x.unwrap())) return false;
+      return check(this.next());
+    }
+    // TODO: Change implementation to not use recursion for performance reasons and
+    // to avoid stack overflows on large iterators. Rust uses try-fold, might want to
+    // look into that.
+    return check(this.next());
+  }
+
   toArray(): T[] {
     return [...this];
   }
