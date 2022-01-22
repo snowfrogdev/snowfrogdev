@@ -61,15 +61,10 @@ export abstract class Iter<T> implements Iterable<T> {
   }
 
   all(f: (x: T) => boolean): boolean {
-    const check = (x: Option<T>): boolean => {
-      if (x.isNone()) return true;
-      if (!f(x.unwrap())) return false;
-      return check(this.next());
+    for (const item of this) {
+      if (!f(item)) return false;
     }
-    // TODO: Change implementation to not use recursion for performance reasons and
-    // to avoid stack overflows on large iterators. Rust uses try-fold, might want to
-    // look into that.
-    return check(this.next());
+    return true;
   }
 
   position(predicate: (x: T) => boolean): Option<number> {
