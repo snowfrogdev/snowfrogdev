@@ -72,6 +72,17 @@ export abstract class Iter<T> implements Iterable<T> {
     return check(this.next());
   }
 
+  position(predicate: (x: T) => boolean): Option<number> {
+    let i = 0;
+    for (const item of this) {
+      if (predicate(item)) {
+        return new Some(i);
+      }
+      i++;
+    }
+    return new None();
+  }
+
   toArray(): T[] {
     return [...this];
   }
