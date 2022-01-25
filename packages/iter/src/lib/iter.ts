@@ -1,6 +1,6 @@
 import { None, Option, Some } from '@snowfrog/option';
 import { Err, Ok, Result } from '@snowfrog/result';
-import { FilterIter, MapIter, ToIter, SkipIter, ChainIter, EnumerateIter } from './internal';
+import { FilterIter, MapIter, ToIter, SkipIter, ChainIter, EnumerateIter, FlattenIter } from './internal';
 
 export abstract class Iter<T> implements Iterable<T> {
   abstract next(): Option<T>;
@@ -78,6 +78,10 @@ export abstract class Iter<T> implements Iterable<T> {
     return new None();
   }
 
+  flatten<T extends Iterable<U>, U = T extends Iterable<infer U> ? U : never>(this: Iter<T>): FlattenIter<Iter<T>, T, U> {
+    return new FlattenIter(this);
+  }
+
   toArray(): T[] {
     return [...this];
   }
@@ -90,3 +94,10 @@ export abstract class Iter<T> implements Iterable<T> {
     return new Map(this);
   }
 }
+
+
+function unwrap<T extends Iterable<U>, U>(iter: Iterable<T>): U {
+  return [...[...iter][0]][0];
+}
+
+unwrap([[1,2,3],[4,5,6]]);

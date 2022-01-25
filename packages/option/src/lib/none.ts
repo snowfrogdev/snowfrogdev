@@ -11,6 +11,7 @@ export class None extends Option<never> {
   isNone(): this is None {
     return true;
   }
+  
   expect(message: string): never {
     throw new Error(message);
   }
