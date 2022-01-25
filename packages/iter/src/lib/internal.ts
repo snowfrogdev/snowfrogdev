@@ -7,3 +7,4 @@ export * from './skip';
 export * from './chain';
 export * from './enumerate';
 export * from './flatten';
+export * from './flat-map';
