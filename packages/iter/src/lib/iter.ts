@@ -88,6 +88,12 @@ export abstract class Iter<T> implements Iterable<T> {
     return new FlatMapIter(this, f);
   }
 
+  forEach(f: (item: T) => void): void {
+    for (const item of this) {
+      f(item);
+    }
+  }
+
   toArray(): T[] {
     return [...this];
   }
