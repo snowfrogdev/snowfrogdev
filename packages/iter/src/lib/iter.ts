@@ -84,6 +84,13 @@ export abstract class Iter<T> implements Iterable<T> {
     return true;
   }
 
+  any(f: (x: T) => boolean): boolean {
+    for (const item of this) {
+      if (f(item)) return true;
+    }
+    return false;
+  }
+
   position(predicate: (x: T) => boolean): Option<number> {
     let i = 0;
     for (const item of this) {
