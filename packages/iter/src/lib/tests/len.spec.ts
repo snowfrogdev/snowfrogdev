@@ -1,4 +1,3 @@
-import { None, Some } from '@snowfrog/option';
 import { Iter } from '../internal';
 
 describe('DoubleEndedIter', () => {

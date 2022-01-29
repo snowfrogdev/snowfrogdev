@@ -23,6 +23,10 @@ export abstract class Iter<T> implements Iterable<T> {
     return new ToIter(iterable);
   }
 
+  static once<T>(value: T): DoubleEndedIter<T> {
+    return Iter.from([value]);
+  }
+
   count(): number {
     let count = 0;
     for (const _ of this) {
