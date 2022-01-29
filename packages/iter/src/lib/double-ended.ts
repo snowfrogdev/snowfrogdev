@@ -1,4 +1,4 @@
-import { Option } from '@snowfrog/option';
+import { None, Option, Some } from '@snowfrog/option';
 import { ArrayIter, Iter, RevIter } from './internal';
 
 export abstract class DoubleEndedIter<T> extends Iter<T> {
@@ -15,10 +15,23 @@ export abstract class DoubleEndedIter<T> extends Iter<T> {
   rfold<B>(init: B, f: (acc: B, item: T) => B): B {
     let acc = init;
     let item = this.nextBack();
-    while(item.isSome()) {
+    while (item.isSome()) {
       acc = f(acc, item.unwrap());
       item = this.nextBack();
     }
     return acc;
+  }
+
+  rfind(predicate: (item: T) => boolean): Option<T> {
+    let item = this.nextBack();
+    while (item.isSome()) {
+      const unwrapped = item.unwrap();
+      if (predicate(unwrapped)) {
+        return new Some(unwrapped);
+      }
+      item = this.nextBack();
+    }
+
+    return new None();
   }
 }
