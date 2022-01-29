@@ -18,7 +18,7 @@ export abstract class Iter<T> implements Iterable<T> {
 
   static from<T>(array: T[]): DoubleEndedIter<T>
   static from<T>(iterable: Iterable<T>): Iter<T>
-  static from<T>(iterable: Iterable<T>): Iter<T> | DoubleEndedIter<T> {
+  static from<T>(iterable: Iterable<T> | T[]): Iter<T> | DoubleEndedIter<T> {
     if (iterable instanceof Array) return DoubleEndedIter.from(iterable as T[]);
     return new ToIter(iterable);
   }

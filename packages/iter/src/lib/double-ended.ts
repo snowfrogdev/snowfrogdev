@@ -11,4 +11,14 @@ export abstract class DoubleEndedIter<T> extends Iter<T> {
   rev(): RevIter<this, T> {
     return new RevIter(this);
   }
+
+  rfold<B>(init: B, f: (acc: B, item: T) => B): B {
+    let acc = init;
+    let item = this.nextBack();
+    while(item.isSome()) {
+      acc = f(acc, item.unwrap());
+      item = this.nextBack();
+    }
+    return acc;
+  }
 }

@@ -1,7 +1,7 @@
 import { None, Some } from '@snowfrog/option';
 import { Iter } from '../internal';
 
-describe('Iter', () => {
+describe('DoubleEndedIter', () => {
   it('rev()', () => {
     const arr = [1, 2, 3];
 
