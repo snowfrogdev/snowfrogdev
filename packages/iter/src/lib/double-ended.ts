@@ -39,9 +39,18 @@ export abstract class DoubleEndedIter<T> extends Iter<T> {
     return new None();
   }
 
-  /* rposition(predicate: (item: T) => boolean): Option<number> {
-    const n = this.len();
+  rposition(predicate: (item: T) => boolean): Option<number> {
+    let i = this.len();
+    let item = this.nextBack();
+    while (item.isSome()) {
+      i = i - 1;
+      if(predicate(item.unwrap())) {
+        
+        return new Some(i);
+      }
+      item = this.nextBack();
+    }
 
     return new None();
-  } */
+  }
 }
