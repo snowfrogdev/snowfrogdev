@@ -94,6 +94,14 @@ export abstract class Iter<T> implements Iterable<T> {
     }
   }
 
+  fold<B>(init: B, f: (acc: B, item: T) => B): B {
+    let acc = init;
+    for (const item of this) {
+      acc = f(acc, item);
+    }
+    return acc;
+  }
+
   toArray(): T[] {
     return [...this];
   }
