@@ -3,9 +3,13 @@ import { ArrayIter, Iter, RevIter } from './internal';
 
 export abstract class DoubleEndedIter<T> extends Iter<T> {
   abstract nextBack(): Option<T>;
-
+  abstract len(): number;
   static from<T>(array: T[]): DoubleEndedIter<T> {
     return ArrayIter.from(array);
+  }
+
+  isEmpty(): boolean {
+    return this.len() === 0;
   }
 
   rev(): RevIter<this, T> {
@@ -34,4 +38,10 @@ export abstract class DoubleEndedIter<T> extends Iter<T> {
 
     return new None();
   }
+
+  /* rposition(predicate: (item: T) => boolean): Option<number> {
+    const n = this.len();
+
+    return new None();
+  } */
 }

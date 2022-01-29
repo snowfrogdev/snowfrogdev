@@ -27,4 +27,8 @@ export class ArrayIter<T> extends DoubleEndedIter<T> {
     if (this.headIndex > this.tailIndex) return new None();
     return new Some(this.array[this.tailIndex--]);
   }
+
+  len(): number {
+    return this.tailIndex - this.headIndex + 1;
+  }
 }

@@ -21,4 +21,8 @@ export class RevIter<I extends DoubleEndedIter<T>, T> extends DoubleEndedIter<T>
       item = this.next();
     }
   }
+
+  len(): number {
+    return this.iter.len();
+  }
 }
