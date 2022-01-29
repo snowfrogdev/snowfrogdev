@@ -1,13 +1,26 @@
 import { None, Option, Some } from '@snowfrog/option';
 import { Err, Ok, Result } from '@snowfrog/result';
-import { FilterIter, MapIter, ToIter, SkipIter, ChainIter, EnumerateIter, FlattenIter, FlatMapIter } from './internal';
+import {
+  FilterIter,
+  MapIter,
+  ToIter,
+  SkipIter,
+  ChainIter,
+  EnumerateIter,
+  FlattenIter,
+  FlatMapIter,
+  DoubleEndedIter,
+} from './internal';
 
 export abstract class Iter<T> implements Iterable<T> {
   abstract next(): Option<T>;
   abstract [Symbol.iterator](): Iterator<T>;
 
-  static from<T>(iterable: Iterable<T>): Iter<T> {
-    return ToIter.from(iterable);
+  static from<T>(array: T[]): DoubleEndedIter<T>
+  static from<T>(iterable: Iterable<T>): Iter<T>
+  static from<T>(iterable: Iterable<T>): Iter<T> | DoubleEndedIter<T> {
+    if (iterable instanceof Array) return DoubleEndedIter.from(iterable as T[]);
+    return new ToIter(iterable);
   }
 
   count(): number {
@@ -105,7 +118,7 @@ export abstract class Iter<T> implements Iterable<T> {
   reduce(f: (acc: T, item: T) => T): Option<T> {
     const first = this.next();
     if (first.isNone()) return new None();
-    return new Some(this.fold(first.unwrap(), f))
+    return new Some(this.fold(first.unwrap(), f));
   }
 
   toArray(): T[] {
