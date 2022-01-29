@@ -102,6 +102,12 @@ export abstract class Iter<T> implements Iterable<T> {
     return acc;
   }
 
+  reduce(f: (acc: T, item: T) => T): Option<T> {
+    const first = this.next();
+    if (first.isNone()) return new None();
+    return new Some(this.fold(first.unwrap(), f))
+  }
+
   toArray(): T[] {
     return [...this];
   }
