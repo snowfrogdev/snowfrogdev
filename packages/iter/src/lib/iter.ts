@@ -132,6 +132,10 @@ export abstract class Iter<T> implements Iterable<T> {
     return new Some(this.fold(first.unwrap(), f));
   }
 
+  last(): Option<T> {
+    return this.fold(new None() as Option<T>, (_: Option<T>, x: T) => new Some(x));
+  }
+
   toArray(): T[] {
     return [...this];
   }
