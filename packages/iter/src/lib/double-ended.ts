@@ -61,4 +61,9 @@ export abstract class DoubleEndedIter<T> extends Iter<T> {
 
     return new None();
   }
+
+  nthBack(n: number): Option<T> {
+    if (this.advanceBackBy(n).isErr()) return new None();
+    return this.nextBack();
+  }
 }
