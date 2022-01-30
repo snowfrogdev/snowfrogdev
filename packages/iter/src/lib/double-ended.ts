@@ -1,4 +1,5 @@
 import { None, Option, Some } from '@snowfrog/option';
+import { Err, Ok, Result } from '@snowfrog/result';
 import { ArrayIter, Iter, RevIter } from './internal';
 
 export abstract class DoubleEndedIter<T> extends Iter<T> {
@@ -6,6 +7,14 @@ export abstract class DoubleEndedIter<T> extends Iter<T> {
   abstract len(): number;
   static from<T>(array: T[]): DoubleEndedIter<T> {
     return ArrayIter.from(array);
+  }
+
+  advanceBackBy(n: number): Result<never[], number> {
+    for (let i = 0; i < n; i++) {
+      if (this.nextBack().isNone()) return new Err(i);
+    }
+
+    return new Ok([]);
   }
 
   isEmpty(): boolean {
@@ -44,8 +53,7 @@ export abstract class DoubleEndedIter<T> extends Iter<T> {
     let item = this.nextBack();
     while (item.isSome()) {
       i = i - 1;
-      if(predicate(item.unwrap())) {
-        
+      if (predicate(item.unwrap())) {
         return new Some(i);
       }
       item = this.nextBack();
