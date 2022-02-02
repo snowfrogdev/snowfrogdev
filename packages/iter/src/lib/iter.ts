@@ -10,6 +10,7 @@ import {
   FlattenIter,
   FlatMapIter,
   DoubleEndedIter,
+  ChainDoubleEndedIter,
 } from './internal';
 
 export abstract class Iter<T> implements Iterable<T> {
@@ -69,7 +70,12 @@ export abstract class Iter<T> implements Iterable<T> {
     return new Ok([]);
   }
 
-  chain(other: Iter<T>): ChainIter<this, Iter<T>, T> {
+  chain<U extends DoubleEndedIter<T>, V extends DoubleEndedIter<T>>(this: U, other: V): ChainDoubleEndedIter<U, V, T>;
+  chain(other: Iter<T>): ChainIter<this, Iter<T>, T>;
+  chain(other: Iter<T> | DoubleEndedIter<T>): ChainIter<this, Iter<T>, T> {
+    if (this.isDoubleEndendIter(this) && this.isDoubleEndendIter(other)) {
+      return new ChainDoubleEndedIter(this, other as DoubleEndedIter<T>);
+    }
     return new ChainIter(this, other);
   }
 
@@ -147,13 +153,9 @@ export abstract class Iter<T> implements Iterable<T> {
   toMap<K, V>(this: Iter<[K, V]>): Map<K, V> {
     return new Map(this);
   }
-}
 
-function unwrap<T extends Iterable<U>, U>(iter: Iterable<T>): U {
-  return [...[...iter][0]][0];
+  private isDoubleEndendIter<T>(iter: Iter<T>): this is DoubleEndedIter<T> {
+    const doubleEndedIterMethodNames = ['nextBack', 'advanceBackBy', 'nthBack', 'rfind'];
+    return iter instanceof DoubleEndedIter || doubleEndedIterMethodNames.every((name) => name in iter);
+  }
 }
-
-unwrap([
-  [1, 2, 3],
-  [4, 5, 6],
-]);

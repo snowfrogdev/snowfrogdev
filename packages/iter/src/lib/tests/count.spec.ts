@@ -1,4 +1,4 @@
-import { Iter } from "../internal";
+import { Iter } from '../internal';
 
 describe('Iter', () => {
   it.each([
@@ -10,4 +10,4 @@ describe('Iter', () => {
     const iter = Iter.from(arr);
     expect(iter.count()).toBe(expected);
   });
-})
+});

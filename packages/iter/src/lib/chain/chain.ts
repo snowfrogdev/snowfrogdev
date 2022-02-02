@@ -1,9 +1,9 @@
 import { None, Option, Some } from '@snowfrog/option';
-import { Iter } from './internal';
+import { Iter } from '../internal';
 
 export class ChainIter<A extends Iter<T>, B extends Iter<T>, T> extends Iter<T> {
-  private a: Option<A>;
-  private b: Option<B>;
+  protected a: Option<A>;
+  protected b: Option<B>;
   constructor(a: A, b: B) {
     super();
     this.a = new Some(a);
@@ -24,7 +24,7 @@ export class ChainIter<A extends Iter<T>, B extends Iter<T>, T> extends Iter<T> 
     }
   }
 
-  private fuse(iter: 'a' | 'b', callback: () => Option<T>): Option<T> {
+  protected fuse(iter: 'a' | 'b', callback: () => Option<T>): Option<T> {
     if (this[iter].isSome()) {
       const result = callback();
       if (result.isNone()) {
@@ -37,7 +37,7 @@ export class ChainIter<A extends Iter<T>, B extends Iter<T>, T> extends Iter<T> 
     return new None();
   }
 
-  private maybe(iter: 'a' | 'b', callback: () => Option<T>): Option<T> {
+  protected maybe(iter: 'a' | 'b', callback: () => Option<T>): Option<T> {
     if (this[iter].isSome()) return callback();
     return new None();
   }
