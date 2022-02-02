@@ -14,6 +14,14 @@ Before you can use this Unleash SDK you need to set up a Unleash Proxy instance.
 npm install @snowfrog/ngx-unleash-proxy-client
 ```
 
+Following this, you'll probably have to install some peer dependencies that you do not yet have installed
+in your project. They will be listed in the output from the `npm install` command.
+
+Example of a peer dependency that you'll probably need to install:
+```bash
+npm install unleash-proxy-client
+```
+
 ### Step 3: Initialize the SDK
 
 You need to have a Unleash-hosted instance, and the proxy needs to be enabled. In addition you will need a proxy-specific clientKey in order to connect to the Unleash-hosted Proxy.
