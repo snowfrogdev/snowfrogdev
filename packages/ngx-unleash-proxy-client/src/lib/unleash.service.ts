@@ -1,5 +1,6 @@
 import { ApplicationRef, Inject, Injectable, Injector } from '@angular/core';
-import { fromEvent, Observable, share, take, tap } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
+import { share, take, tap } from 'rxjs/operators'
 import { UnleashClient } from 'unleash-proxy-client';
 import { UnleashVariant, UnleashContext, UnleashConfig } from './internal';
 import { UnleashConfigToken } from './unleash-config';
