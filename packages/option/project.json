@@ -4,14 +4,25 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "npx -p cpy-cli cpy packages/option/README.md packages/option/src",
+          "nx run option:build-with-readme"
+        ],
+        "parallel": false
+      }
+    },
+    "build-with-readme": {
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/option",
-        "main": "packages/option/src/index.ts",
+        "entryFile": "packages/option/src/index.ts",
         "tsConfig": "packages/option/tsconfig.lib.json",
-        "assets": ["packages/option/*.md"],
-        "packageJson": "packages/option/package.json"
+        "assets": ["packages/option/src/README.md"],
+        "project": "packages/option/package.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {
@@ -31,9 +42,8 @@
     },
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
-      "outputs": [],
       "options": {
-        "command": "npm publish --tag=latest --access public",
+        "commands": ["npm publish --tag=latest --access public"],
         "cwd": "dist/packages/option"
       }
     },
