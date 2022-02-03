@@ -43,7 +43,7 @@
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": ["npm publish --tag=latest --access public"],
+        "command": "npm publish --tag=latest --access public",
         "cwd": "dist/packages/option"
       }
     },
