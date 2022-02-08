@@ -4,14 +4,25 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "npx -p cpy-cli cpy packages/result/README.md packages/result/src",
+          "nx run result:build-with-readme"
+        ],
+        "parallel": false
+      }
+    },
+    "build-with-readme": {
+      "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/result",
-        "main": "packages/result/src/index.ts",
+        "entryFile": "packages/result/src/index.ts",
         "tsConfig": "packages/result/tsconfig.lib.json",
-        "assets": ["packages/result/*.md"],
-        "packageJson": "packages/result/package.json"
+        "assets": ["packages/result/src/README.md"],
+        "project": "packages/result/package.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {

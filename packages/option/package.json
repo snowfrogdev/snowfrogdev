@@ -1,6 +1,6 @@
 {
   "name": "@snowfrog/option",
-  "version": "2.2.0",
+  "version": "2.4.1",
   "description": "Type-safe optional value representation.",
   "keywords": [
     "option",

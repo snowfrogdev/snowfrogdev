@@ -1,6 +1,6 @@
 {
   "name": "@snowfrog/ngx-unleash-proxy-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Unleash Proxy Client SDK for Angular",
   "keywords": [
     "unleash",
