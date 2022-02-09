@@ -1,6 +1,6 @@
 import { None, Option, Some } from '@snowfrog/option';
 import { Err, Ok, Result } from '@snowfrog/result';
-import { Iter } from './internal';
+import { Iter, MapIter } from './internal';
 
 type Constructor<T> = new (...args: any[]) => T;
 type AbstractConstructor<T = Record<string, unknown>> = abstract new (...args: any[]) => T;
@@ -67,6 +67,10 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
 
     last(): Option<T> {
       return this.fold(new None() as Option<T>, (_: Option<T>, x: T) => new Some(x));
+    }
+
+    map<B>(f: (item: T) => B): MapIter<this, T, B> {
+      return new MapIter(this, f);
     }
 
     nth(n: number): Option<T> {

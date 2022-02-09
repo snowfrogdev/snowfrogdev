@@ -1,10 +1,13 @@
 import { Option } from '@snowfrog/option';
-import { Iter } from './internal';
+import { Iter, IterCtor, mixinIter } from './internal';
 
-export class MapIter<I extends Iter<T>, T, B> extends Iter<B> {
+const MapIterBase: IterCtor<any> = mixinIter(class {});
+
+export class MapIter<I extends Iter<T>, T, B> extends MapIterBase {
   constructor(private iter: I, private f: (item: T) => B) {
     super();
   }
+
   next(): Option<B> {
     return this.iter.next().map(this.f);
   }

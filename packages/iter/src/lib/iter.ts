@@ -1,5 +1,6 @@
 import { Option } from '@snowfrog/option';
 import { Result } from '@snowfrog/result';
+import { MapIter } from './internal';
 
 export interface Iter<T> extends Iterable<T> {
   advanceBy(n: number): Result<never[], number>;
@@ -9,6 +10,7 @@ export interface Iter<T> extends Iterable<T> {
   find(predicate: (item: T) => boolean): Option<T>;
   fold<B>(init: B, f: (acc: B, item: T) => B): B;
   last(): Option<T>;
+  map<B>(f: (item: T) => B): MapIter<this, T, B>;
   next(): Option<T>;
   nth(n: number): Option<T>;
   position(predicate: (x: T) => boolean): Option<number>;
@@ -22,11 +24,6 @@ export interface Iter<T> extends Iterable<T> {
   
   static once<T>(value: T): DoubleEndedIter<T> {
     return Iter.from([value]);
-  }
-
-
-  map<B>(f: (item: T) => B): MapIter<this, T, B> {
-    return new MapIter(this, f);
   }
 
   filter<P extends (item: T) => boolean>(predicate: P): FilterIter<this, T> {

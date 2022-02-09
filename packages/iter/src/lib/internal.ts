@@ -5,7 +5,7 @@ export * from './from';
 // export * from './double-ended';
 // export * from './array';
 // export * from './filter';
-// export * from './map';
+export * from './map';
 // export * from './skip';
 // export * from './chain/chain';
 // export * from './chain/chain-double-ended';
