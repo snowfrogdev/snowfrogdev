@@ -65,6 +65,10 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
       return acc;
     }
 
+    last(): Option<T> {
+      return this.fold(new None() as Option<T>, (_: Option<T>, x: T) => new Some(x));
+    }
+
     nth(n: number): Option<T> {
       if (this.advanceBy(n).isErr()) return new None();
       return this.next();

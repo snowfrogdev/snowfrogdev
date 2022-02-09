@@ -8,6 +8,7 @@ export interface Iter<T> extends Iterable<T> {
   count(): number;
   find(predicate: (item: T) => boolean): Option<T>;
   fold<B>(init: B, f: (acc: B, item: T) => B): B;
+  last(): Option<T>;
   next(): Option<T>;
   nth(n: number): Option<T>;
   position(predicate: (x: T) => boolean): Option<number>;
@@ -60,10 +61,6 @@ export interface Iter<T> extends Iterable<T> {
     for (const item of this) {
       f(item);
     }
-  }
-
-  last(): Option<T> {
-    return this.fold(new None() as Option<T>, (_: Option<T>, x: T) => new Some(x));
   }
 
   toArray(): T[] {
