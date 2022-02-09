@@ -1,4 +1,5 @@
 import { None, Option, Some } from '@snowfrog/option';
+import { Err, Ok, Result } from '@snowfrog/result';
 import { Iter } from './internal';
 
 export type Constructor<T> = new (...args: any[]) => T;
@@ -15,6 +16,14 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
 
     [Symbol.iterator](): Iterator<T> {
       throw new Error('[Symbol.iterator] is not implemented and needs to be overridden');
+    }
+
+    advanceBy(n: number): Result<never[], number> {
+      for (let i = 0; i < n; i++) {
+        if (this.next().isNone()) return new Err(i);
+      }
+
+      return new Ok([]);
     }
 
     count(): number {
@@ -41,21 +50,10 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
       }
       return acc;
     }
+
+    nth(n: number): Option<T> {
+      if (this.advanceBy(n).isErr()) return new None();
+      return this.next();
+    }
   };
 }
-
-/* export class ToIter<T> implements Iter<T> {
-  private iterator: Iterator<T>;
-  constructor(iterable: Iterable<T>) {
-    this.iterator = iterable[Symbol.iterator]();
-  }
-
-  [Symbol.iterator](): Iterator<T> {
-    return this.iterator;
-  }
-
-  next(): Option<T> {
-    const { done, value } = this.iterator.next();
-    return done ? new None() : new Some(value);
-  }
-} */

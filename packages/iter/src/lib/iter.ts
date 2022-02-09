@@ -1,43 +1,20 @@
 import { Option } from '@snowfrog/option';
+import { Result } from '@snowfrog/result';
 
 export interface Iter<T> extends Iterable<T> {
+  advanceBy(n: number): Result<never[], number>;
   count(): number;
   find(predicate: (item: T) => boolean): Option<T>;
   fold<B>(init: B, f: (acc: B, item: T) => B): B;
   next(): Option<T>;
+  nth(n: number): Option<T>;
 }
 
 /* export abstract class Iter<T> implements Iterable<T> {
-  abstract next(): Option<T>;
-  abstract [Symbol.iterator](): Iterator<T>;
-
-  static from<T>(array: T[]): DoubleEndedIter<T>;
-  static from<T>(iterable: Iterable<T>): Iter<T>;
-  static from<T>(iterable: Iterable<T> | T[]): Iter<T> | DoubleEndedIter<T> {
-    if (iterable instanceof Array) return DoubleEndedIter.from(iterable as T[]);
-    return new ToIter(iterable);
-  }
-
   static once<T>(value: T): DoubleEndedIter<T> {
     return Iter.from([value]);
   }
 
-  count(): number {
-    let count = 0;
-    for (const _ of this) {
-      count++;
-    }
-    return count;
-  }
-
-  find(predicate: (item: T) => boolean): Option<T> {
-    for (const item of this) {
-      if (predicate(item)) {
-        return new Some(item);
-      }
-    }
-    return new None();
-  }
 
   map<B>(f: (item: T) => B): MapIter<this, T, B> {
     return new MapIter(this, f);
