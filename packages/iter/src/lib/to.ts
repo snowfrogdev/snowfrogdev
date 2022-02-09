@@ -25,6 +25,13 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
       return true;
     }
 
+    any(f: (x: T) => boolean): boolean {
+      for (const item of this) {
+        if (f(item)) return true;
+      }
+      return false;
+    }
+
     advanceBy(n: number): Result<never[], number> {
       for (let i = 0; i < n; i++) {
         if (this.next().isNone()) return new Err(i);

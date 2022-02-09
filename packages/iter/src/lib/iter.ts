@@ -4,6 +4,7 @@ import { Result } from '@snowfrog/result';
 export interface Iter<T> extends Iterable<T> {
   advanceBy(n: number): Result<never[], number>;
   all(f: (x: T) => boolean): boolean;
+  any(f: (x: T) => boolean): boolean;
   count(): number;
   find(predicate: (item: T) => boolean): Option<T>;
   fold<B>(init: B, f: (acc: B, item: T) => B): B;
@@ -41,13 +42,6 @@ export interface Iter<T> extends Iterable<T> {
 
   enumerate(): EnumerateIter<this, T> {
     return new EnumerateIter(this);
-  }
-
-  any(f: (x: T) => boolean): boolean {
-    for (const item of this) {
-      if (f(item)) return true;
-    }
-    return false;
   }
 
   position(predicate: (x: T) => boolean): Option<number> {
