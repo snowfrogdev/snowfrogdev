@@ -18,6 +18,13 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
       throw new Error('[Symbol.iterator] is not implemented and needs to be overridden');
     }
 
+    all(f: (x: T) => boolean): boolean {
+      for (const item of this) {
+        if (!f(item)) return false;
+      }
+      return true;
+    }
+
     advanceBy(n: number): Result<never[], number> {
       for (let i = 0; i < n; i++) {
         if (this.next().isNone()) return new Err(i);

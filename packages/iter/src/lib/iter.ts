@@ -3,6 +3,7 @@ import { Result } from '@snowfrog/result';
 
 export interface Iter<T> extends Iterable<T> {
   advanceBy(n: number): Result<never[], number>;
+  all(f: (x: T) => boolean): boolean;
   count(): number;
   find(predicate: (item: T) => boolean): Option<T>;
   fold<B>(init: B, f: (acc: B, item: T) => B): B;
@@ -11,6 +12,7 @@ export interface Iter<T> extends Iterable<T> {
 }
 
 /* export abstract class Iter<T> implements Iterable<T> {
+  
   static once<T>(value: T): DoubleEndedIter<T> {
     return Iter.from([value]);
   }
@@ -28,19 +30,6 @@ export interface Iter<T> extends Iterable<T> {
     return new SkipIter(this, n);
   }
 
-  nth(n: number): Option<T> {
-    if (this.advanceBy(n).isErr()) return new None();
-    return this.next();
-  }
-
-  advanceBy(n: number): Result<never[], number> {
-    for (let i = 0; i < n; i++) {
-      if (this.next().isNone()) return new Err(i);
-    }
-
-    return new Ok([]);
-  }
-
   chain<U extends DoubleEndedIter<T>, V extends DoubleEndedIter<T>>(this: U, other: V): ChainDoubleEndedIter<U, V, T>;
   chain(other: Iter<T>): ChainIter<this, Iter<T>, T>;
   chain(other: Iter<T> | DoubleEndedIter<T>): ChainIter<this, Iter<T>, T> {
@@ -52,13 +41,6 @@ export interface Iter<T> extends Iterable<T> {
 
   enumerate(): EnumerateIter<this, T> {
     return new EnumerateIter(this);
-  }
-
-  all(f: (x: T) => boolean): boolean {
-    for (const item of this) {
-      if (!f(item)) return false;
-    }
-    return true;
   }
 
   any(f: (x: T) => boolean): boolean {
