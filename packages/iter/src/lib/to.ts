@@ -80,5 +80,11 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
       }
       return new None();
     }
+
+    reduce(f: (acc: T, item: T) => T): Option<T> {
+      const first = this.next();
+      if (first.isNone()) return new None();
+      return new Some(this.fold(first.unwrap(), f));
+    }
   };
 }
