@@ -2,6 +2,7 @@ import { Option } from '@snowfrog/option';
 
 export interface Iter<T> extends Iterable<T> {
   count(): number;
+  find(predicate: (item: T) => boolean): Option<T>;
   fold<B>(init: B, f: (acc: B, item: T) => B): B;
   next(): Option<T>;
 }

@@ -6,7 +6,6 @@ export type AbstractConstructor<T = Record<string, unknown>> = abstract new (...
 
 export type IterCtor<T> = Constructor<Iter<T>>;
 
-
 export function mixinIter<T, B extends AbstractConstructor<Record<string, any>>>(base: B): IterCtor<T> & B;
 export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B): IterCtor<T> & B {
   return class extends base {
@@ -24,6 +23,15 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
         count++;
       }
       return count;
+    }
+
+    find(predicate: (item: T) => boolean): Option<T> {
+      for (const item of this) {
+        if (predicate(item)) {
+          return new Some(item);
+        }
+      }
+      return new None();
     }
 
     fold<B>(init: B, f: (acc: B, item: T) => B): B {
