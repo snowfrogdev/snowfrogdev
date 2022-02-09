@@ -1,4 +1,4 @@
-import { Iter } from '../internal';
+import { from } from '../internal';
 
 describe('Iter', () => {
   it.each([
@@ -7,7 +7,7 @@ describe('Iter', () => {
     [[...Array(100).keys()], 100],
     [[...Array(1000).keys()], 1000],
   ])('count()', (arr, expected) => {
-    const iter = Iter.from(arr);
+    const iter = from(arr);
     expect(iter.count()).toBe(expected);
   });
 });

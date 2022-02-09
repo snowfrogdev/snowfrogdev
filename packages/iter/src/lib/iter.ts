@@ -1,8 +1,9 @@
 import { Option } from '@snowfrog/option';
 
 export interface Iter<T> extends Iterable<T> {
-  next(): Option<T>;
+  count(): number;
   fold<B>(init: B, f: (acc: B, item: T) => B): B;
+  next(): Option<T>;
 }
 
 /* export abstract class Iter<T> implements Iterable<T> {

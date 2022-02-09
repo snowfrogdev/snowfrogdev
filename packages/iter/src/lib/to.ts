@@ -18,6 +18,14 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
       throw new Error('[Symbol.iterator] is not implemented and needs to be overridden');
     }
 
+    count(): number {
+      let count = 0;
+      for (const _ of this) {
+        count++;
+      }
+      return count;
+    }
+
     fold<B>(init: B, f: (acc: B, item: T) => B): B {
       let acc = init;
       for (const item of this) {
