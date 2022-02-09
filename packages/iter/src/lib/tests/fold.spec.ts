@@ -1,10 +1,10 @@
-import { Iter } from '../internal';
+import { from } from '../internal';
 
 describe('Iter', () => {
   it('fold(), basic usage', () => {
     const arr = [1, 2, 3];
 
-    const sum = Iter.from(arr).fold(0, (acc, x) => acc + x);
+    const sum = from(arr).fold(0, (acc, x) => acc + x);
 
     expect(sum).toBe(6);
   });
@@ -14,7 +14,7 @@ describe('Iter', () => {
 
     const zero = "0";
 
-    const result = Iter.from(numbers).fold(zero, (acc, x) => `(${acc} + ${x})`);
+    const result = from(numbers).fold(zero, (acc, x) => `(${acc} + ${x})`);
 
     expect(result).toBe('(((((0 + 1) + 2) + 3) + 4) + 5)');
   });
