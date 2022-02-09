@@ -1,19 +1,11 @@
-import { None, Option, Some } from '@snowfrog/option';
-import { Err, Ok, Result } from '@snowfrog/result';
-import {
-  FilterIter,
-  MapIter,
-  ToIter,
-  SkipIter,
-  ChainIter,
-  EnumerateIter,
-  FlattenIter,
-  FlatMapIter,
-  DoubleEndedIter,
-  ChainDoubleEndedIter,
-} from './internal';
+import { Option } from '@snowfrog/option';
 
-export abstract class Iter<T> implements Iterable<T> {
+export interface Iter<T> extends Iterable<T> {
+  next(): Option<T>;
+  fold<B>(init: B, f: (acc: B, item: T) => B): B;
+}
+
+/* export abstract class Iter<T> implements Iterable<T> {
   abstract next(): Option<T>;
   abstract [Symbol.iterator](): Iterator<T>;
 
@@ -158,4 +150,4 @@ export abstract class Iter<T> implements Iterable<T> {
     const doubleEndedIterMethodNames = ['nextBack', 'advanceBackBy', 'nthBack', 'rfind'];
     return iter instanceof DoubleEndedIter || doubleEndedIterMethodNames.every((name) => name in iter);
   }
-}
+} */
