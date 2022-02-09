@@ -2,8 +2,8 @@ import { None, Option, Some } from '@snowfrog/option';
 import { Err, Ok, Result } from '@snowfrog/result';
 import { Iter } from './internal';
 
-export type Constructor<T> = new (...args: any[]) => T;
-export type AbstractConstructor<T = Record<string, unknown>> = abstract new (...args: any[]) => T;
+type Constructor<T> = new (...args: any[]) => T;
+type AbstractConstructor<T = Record<string, unknown>> = abstract new (...args: any[]) => T;
 
 export type IterCtor<T> = Constructor<Iter<T>>;
 
@@ -89,6 +89,18 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
       const first = this.next();
       if (first.isNone()) return new None();
       return new Some(this.fold(first.unwrap(), f));
+    }
+
+    toArray(): T[] {
+      return [...this];
+    }
+
+    toMap<K, V>(this: Iter<[K, V]>): Map<K, V> {
+      return new Map(this);
+    }
+
+    toSet(): Set<T> {
+      return new Set(this);
     }
   };
 }

@@ -13,6 +13,9 @@ export interface Iter<T> extends Iterable<T> {
   nth(n: number): Option<T>;
   position(predicate: (x: T) => boolean): Option<number>;
   reduce(f: (acc: T, item: T) => T): Option<T>;
+  toArray(): T[];
+  toMap<K, V>(this: Iter<[K, V]>): Map<K, V>;
+  toSet(): Set<T>;
 }
 
 /* export abstract class Iter<T> implements Iterable<T> {
@@ -61,22 +64,5 @@ export interface Iter<T> extends Iterable<T> {
     for (const item of this) {
       f(item);
     }
-  }
-
-  toArray(): T[] {
-    return [...this];
-  }
-
-  toSet(): Set<T> {
-    return new Set(this);
-  }
-
-  toMap<K, V>(this: Iter<[K, V]>): Map<K, V> {
-    return new Map(this);
-  }
-
-  private isDoubleEndendIter<T>(iter: Iter<T>): this is DoubleEndedIter<T> {
-    const doubleEndedIterMethodNames = ['nextBack', 'advanceBackBy', 'nthBack', 'rfind'];
-    return iter instanceof DoubleEndedIter || doubleEndedIterMethodNames.every((name) => name in iter);
   }
 } */
