@@ -69,5 +69,16 @@ export function mixinIter<T, B extends Constructor<Record<string, any>>>(base: B
       if (this.advanceBy(n).isErr()) return new None();
       return this.next();
     }
+
+    position(predicate: (x: T) => boolean): Option<number> {
+      let i = 0;
+      for (const item of this) {
+        if (predicate(item)) {
+          return new Some(i);
+        }
+        i++;
+      }
+      return new None();
+    }
   };
 }

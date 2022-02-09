@@ -10,6 +10,7 @@ export interface Iter<T> extends Iterable<T> {
   fold<B>(init: B, f: (acc: B, item: T) => B): B;
   next(): Option<T>;
   nth(n: number): Option<T>;
+  position(predicate: (x: T) => boolean): Option<number>;
 }
 
 /* export abstract class Iter<T> implements Iterable<T> {
@@ -42,17 +43,6 @@ export interface Iter<T> extends Iterable<T> {
 
   enumerate(): EnumerateIter<this, T> {
     return new EnumerateIter(this);
-  }
-
-  position(predicate: (x: T) => boolean): Option<number> {
-    let i = 0;
-    for (const item of this) {
-      if (predicate(item)) {
-        return new Some(i);
-      }
-      i++;
-    }
-    return new None();
   }
 
   flatten<T extends Iterable<U>, U = T extends Iterable<infer U> ? U : never>(
