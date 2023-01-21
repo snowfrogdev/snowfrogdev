@@ -11,4 +11,6 @@
   there: <a routerLink="/protected" routerLinkActive="active">navigate</a>
 </p>
 
+<p>{{(impression | async) | json}}</p>
+
 <router-outlet></router-outlet>

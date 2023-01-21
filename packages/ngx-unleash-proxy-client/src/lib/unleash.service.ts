@@ -1,16 +1,17 @@
 import { ApplicationRef, Inject, Injectable, Injector } from '@angular/core';
 import { fromEvent, Observable } from 'rxjs';
-import { share, take, tap } from 'rxjs/operators'
+import { share, take, tap } from 'rxjs/operators';
 import { UnleashClient } from 'unleash-proxy-client';
+import { ImpressionEvent, ImpressionEventType } from './impression-event';
 import { UnleashVariant, UnleashContext, UnleashConfig } from './internal';
 import { UnleashConfigToken } from './unleash-config';
-
 
 @Injectable({
   providedIn: 'root',
 })
 export class UnleashService {
   private unleash: UnleashClient;
+  public onImpression: Observable<ImpressionEvent<ImpressionEventType>>;
   public onInitialized: Observable<unknown>;
   public onUpdate: Observable<unknown>;
   public onError: Observable<Error>;
@@ -23,6 +24,7 @@ export class UnleashService {
     );
     this.onError = fromEvent<Error>(this.unleash, 'error').pipe(share());
     this.onUpdate = fromEvent(this.unleash, 'update').pipe(share());
+    this.onImpression = fromEvent<ImpressionEvent<ImpressionEventType>>(this.unleash, 'impression').pipe(share());
     this.onUpdate.subscribe(() => {
       this.injector.get(ApplicationRef).tick();
     });
