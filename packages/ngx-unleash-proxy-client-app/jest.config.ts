@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'ngx-unleash-proxy-client',
+/* eslint-disable */
+export default {
+  displayName: 'ngx-unleash-proxy-client-app',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +9,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/packages/ngx-unleash-proxy-client',
+  coverageDirectory: '../../coverage/packages/ngx-unleash-proxy-client-app',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

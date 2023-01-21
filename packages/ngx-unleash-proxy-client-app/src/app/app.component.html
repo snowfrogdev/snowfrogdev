@@ -1,4 +1,5 @@
 <h1 *unleash="'testing-toggles'">{{ title }}</h1>
+<h1 *unleashNot="'testing-toggles'">{{ title }}</h1>
 
 <p *unleash="'testing-toggles'">
   This should only show up when the toggle is enabled. Here is a link to a protected route that is now enabled:
@@ -6,7 +7,7 @@
 </p>
 
 <p *unleashNot="'testing-toggles'">
-  This should only show up when the toggle is disbled. Clicking on the following link should not allow you to navigate
+  This should only show up when the toggle is disabled. Clicking on the following link should not allow you to navigate
   there: <a routerLink="/protected" routerLinkActive="active">navigate</a>
 </p>
 

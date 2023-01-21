@@ -1,6 +1,6 @@
 {
+  "name": "ngx-unleash-proxy-client",
   "projectType": "library",
-  "root": "packages/ngx-unleash-proxy-client",
   "sourceRoot": "packages/ngx-unleash-proxy-client/src",
   "prefix": "ngx-unleash",
   "targets": {
@@ -24,7 +24,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/ngx-unleash-proxy-client"],
       "options": {
-        "jestConfig": "packages/ngx-unleash-proxy-client/jest.config.js",
+        "jestConfig": "packages/ngx-unleash-proxy-client/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -38,7 +38,7 @@
       }
     },
     "publish": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "outputs": [],
       "options": {
         "command": "npm publish --tag=latest --access public",
@@ -46,7 +46,7 @@
       }
     },
     "docs": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "outputs": ["{options.outputPath}"],
       "options": {
         "command": "npx typedoc --options packages/ngx-unleash-proxy-client/typedoc.json",

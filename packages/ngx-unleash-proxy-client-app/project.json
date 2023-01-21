@@ -1,6 +1,6 @@
 {
+  "name": "ngx-unleash-proxy-client-app",
   "projectType": "application",
-  "root": "packages/ngx-unleash-proxy-client-app",
   "sourceRoot": "packages/ngx-unleash-proxy-client-app/src",
   "prefix": "snowfrog",
   "targets": {
@@ -84,7 +84,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/ngx-unleash-proxy-client-app"],
       "options": {
-        "jestConfig": "packages/ngx-unleash-proxy-client-app/jest.config.js",
+        "jestConfig": "packages/ngx-unleash-proxy-client-app/jest.config.ts",
         "passWithNoTests": true
       }
     }

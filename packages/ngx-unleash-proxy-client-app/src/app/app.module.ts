@@ -19,8 +19,8 @@ import { ProtectedComponent } from './protected/protected.component';
       },
     ]),
     NgxUnleashProxyClientModule.init({
-      url: 'url',
-      clientKey: 'mykey',
+      url: 'https://app.unleash-hosted.com/demo/api/proxy',
+      clientKey: 'proxy-123',
       appName: 'ngx-unleash-proxy-client-app',
       refreshInterval: 5,
     }),
